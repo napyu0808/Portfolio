@@ -501,6 +501,17 @@
 
     footer .note { margin-top: 8px; font-size: 0.9rem; }
     footer .copy { margin-top: 24px; font-size: 0.82rem; opacity: 0.4; }
+
+    /* ── FADE IN ── */
+    .fade {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+    }
+    .fade.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
   </style>
 </head>
 <body>
@@ -540,7 +551,7 @@
   <section id="about">
     <div class="section-title">소개</div>
 
-    <div class="card" style="margin-bottom: 16px;">
+    <div class="card fade" style="margin-bottom: 16px;">
       <div class="about-grid">
         <div class="info-item">
           <span class="info-label">이름</span>
@@ -569,7 +580,7 @@
       </div>
     </div>
 
-    <div class="card">
+    <div class="card fade">
       <div style="font-size: 0.85rem; font-weight: 700; color: var(--text-sub); margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.5px;">강점</div>
       <div class="chip-row">
         <span class="chip">커뮤니케이션 능력</span>
@@ -590,7 +601,7 @@
   <section id="cert">
     <div class="section-title">자격증 &amp; 어학</div>
 
-    <div class="cert-grid">
+    <div class="cert-grid fade">
       <div class="cert-card">
         <div class="cert-icon">📋</div>
         <div class="cert-name">ISTQB</div>
@@ -613,7 +624,7 @@
       </div>
     </div>
 
-    <div class="cert-highlight">
+    <div class="cert-highlight fade">
       ISTQB · CSTS는 소프트웨어 테스팅 분야의 국제 · 국내 대표 자격증입니다.
       재학 중 QA 전문 역량을 체계적으로 준비한 것이 핵심 차별화 강점입니다.
     </div>
@@ -623,7 +634,7 @@
   <section id="project">
     <div class="section-title">프로젝트</div>
 
-    <div class="project-card">
+    <div class="project-card fade">
 
       <div class="gallery-divider" style="margin: 0;"></div>
       <div style="padding: 20px 32px 12px;">
@@ -673,7 +684,7 @@
   <section id="activity">
     <div class="section-title">활동 &amp; 경험</div>
 
-    <div class="card">
+    <div class="card fade">
       <div class="timeline">
 
         <div class="tl-item">
@@ -716,7 +727,7 @@
   <section id="goal">
     <div class="section-title">커리어 목표</div>
 
-    <div class="goal-box">
+    <div class="goal-box fade">
       <div class="quote-label">5년 후 목표</div>
       <div class="quote">"최소 두 사람 몫을 하는 QA로 성장하는 것"</div>
       <div class="goal-grid">
@@ -739,7 +750,7 @@
       </div>
     </div>
 
-    <div class="values-grid" style="margin-top: 16px;">
+    <div class="values-grid fade" style="margin-top: 16px;">
       <div class="value-card">
         <div class="value-q">문제 해결 방식</div>
         <div class="value-a">정보 탐색 → 해결 or 수용 판단의 실용적 접근</div>
@@ -760,6 +771,19 @@
   </section>
 
 </main>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.fade').forEach(el => observer.observe(el));
+</script>
 
 <!-- ── FOOTER ── -->
 <footer id="contact">

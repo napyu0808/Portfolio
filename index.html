@@ -18,9 +18,15 @@
       --radius: 14px;
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-    html { font-size: 18px; }
+    html {
+      font-size: 18px;
+    }
 
     body {
       font-family: 'Noto Sans KR', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
@@ -29,7 +35,10 @@
       line-height: 1.75;
     }
 
-    a { color: inherit; text-decoration: none; }
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
 
     /* ── HERO ── */
     .hero {
@@ -52,7 +61,10 @@
       filter: brightness(0.22) saturate(0.6);
     }
 
-    .hero-content { position: relative; z-index: 1; }
+    .hero-content {
+      position: relative;
+      z-index: 1;
+    }
 
     .avatar {
       width: 110px;
@@ -84,7 +96,7 @@
     .hero .intro {
       margin-top: 14px;
       font-size: 1.1rem;
-      color: rgba(255,255,255,0.6);
+      color: rgba(255, 255, 255, 0.6);
       max-width: 560px;
       margin-left: auto;
       margin-right: auto;
@@ -112,7 +124,7 @@
     nav {
       position: sticky;
       top: 0;
-      background: rgba(13,13,13,0.92);
+      background: rgba(13, 13, 13, 0.92);
       backdrop-filter: blur(10px);
       border-bottom: 1px solid var(--border);
       display: flex;
@@ -147,7 +159,9 @@
       gap: 56px;
     }
 
-    section { scroll-margin-top: 65px; }
+    section {
+      scroll-margin-top: 65px;
+    }
 
     /* ── SECTION TITLE ── */
     .section-title {
@@ -182,9 +196,17 @@
       gap: 16px;
     }
 
-    @media (max-width: 540px) { .about-grid { grid-template-columns: 1fr; } }
+    @media (max-width: 540px) {
+      .about-grid {
+        grid-template-columns: 1fr;
+      }
+    }
 
-    .info-item { display: flex; flex-direction: column; gap: 3px; }
+    .info-item {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
 
     .info-label {
       font-size: 0.8rem;
@@ -194,10 +216,18 @@
       letter-spacing: 0.6px;
     }
 
-    .info-value { font-size: 1.1rem; font-weight: 600; }
+    .info-value {
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
 
     /* ── CHIPS ── */
-    .chip-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+    .chip-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 18px;
+    }
 
     .chip {
       background: var(--accent-dim);
@@ -232,9 +262,21 @@
       gap: 8px;
     }
 
-    .cert-icon { font-size: 2rem; }
-    .cert-name { font-weight: 800; font-size: 1.2rem; color: var(--accent); }
-    .cert-level { font-size: 0.9rem; color: var(--text-sub); line-height: 1.5; }
+    .cert-icon {
+      font-size: 2rem;
+    }
+
+    .cert-name {
+      font-weight: 800;
+      font-size: 1.2rem;
+      color: var(--accent);
+    }
+
+    .cert-level {
+      font-size: 0.9rem;
+      color: var(--text-sub);
+      line-height: 1.5;
+    }
 
     .cert-highlight {
       margin-top: 16px;
@@ -254,7 +296,9 @@
       overflow: hidden;
     }
 
-    .project-body { padding: 28px 32px; }
+    .project-body {
+      padding: 28px 32px;
+    }
 
     .project-header {
       display: flex;
@@ -306,7 +350,10 @@
       color: var(--text-sub);
     }
 
-    .project-dl { font-size: 1rem; }
+    .project-dl {
+      font-size: 1rem;
+    }
+
     .project-dl dt {
       font-weight: 700;
       color: var(--accent);
@@ -315,7 +362,11 @@
       letter-spacing: 0.4px;
       margin-top: 14px;
     }
-    .project-dl dd { margin-left: 0; color: var(--text); }
+
+    .project-dl dd {
+      margin-left: 0;
+      color: var(--text);
+    }
 
     .result-badge {
       display: inline-flex;
@@ -351,8 +402,14 @@
       scrollbar-color: var(--accent-border) transparent;
     }
 
-    .gallery::-webkit-scrollbar { height: 5px; }
-    .gallery::-webkit-scrollbar-track { background: transparent; }
+    .gallery::-webkit-scrollbar {
+      height: 5px;
+    }
+
+    .gallery::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
     .gallery::-webkit-scrollbar-thumb {
       background: var(--accent-border);
       border-radius: 10px;
@@ -368,7 +425,9 @@
       transition: border-color 0.2s;
     }
 
-    .gallery img:hover { border-color: var(--accent); }
+    .gallery img:hover {
+      border-color: var(--accent);
+    }
 
     .gallery-divider {
       height: 1px;
@@ -377,7 +436,11 @@
     }
 
     /* ── TIMELINE ── */
-    .timeline { display: flex; flex-direction: column; gap: 20px; }
+    .timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
 
     .tl-item {
       display: grid;
@@ -387,7 +450,10 @@
     }
 
     @media (max-width: 500px) {
-      .tl-item { grid-template-columns: 1fr; gap: 4px; }
+      .tl-item {
+        grid-template-columns: 1fr;
+        gap: 4px;
+      }
     }
 
     .tl-year {
@@ -397,8 +463,16 @@
       padding-top: 2px;
     }
 
-    .tl-content .title { font-weight: 700; font-size: 1.1rem; }
-    .tl-content .detail { font-size: 0.95rem; color: var(--text-sub); margin-top: 3px; }
+    .tl-content .title {
+      font-weight: 700;
+      font-size: 1.1rem;
+    }
+
+    .tl-content .detail {
+      font-size: 0.95rem;
+      color: var(--text-sub);
+      margin-top: 3px;
+    }
 
     /* ── GOAL ── */
     .goal-box {
@@ -433,7 +507,11 @@
       margin-top: 28px;
     }
 
-    @media (max-width: 500px) { .goal-grid { grid-template-columns: 1fr; } }
+    @media (max-width: 500px) {
+      .goal-grid {
+        grid-template-columns: 1fr;
+      }
+    }
 
     .goal-item {
       background: var(--surface2);
@@ -480,7 +558,10 @@
       letter-spacing: 0.4px;
     }
 
-    .value-a { font-size: 1.05rem; font-weight: 700; }
+    .value-a {
+      font-size: 1.05rem;
+      font-weight: 700;
+    }
 
     /* ── FOOTER ── */
     footer {
@@ -499,13 +580,29 @@
       margin-bottom: 10px;
     }
 
-    footer .note { margin-top: 8px; font-size: 0.9rem; }
-    footer .copy { margin-top: 24px; font-size: 0.82rem; opacity: 0.4; }
+    footer .note {
+      margin-top: 8px;
+      font-size: 0.9rem;
+    }
+
+    footer .copy {
+      margin-top: 24px;
+      font-size: 0.82rem;
+      opacity: 0.4;
+    }
 
     /* ── SKILL BAR ── */
-    .skill-list { display: flex; flex-direction: column; gap: 18px; }
+    .skill-list {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
 
-    .skill-item { display: flex; flex-direction: column; gap: 7px; }
+    .skill-item {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
 
     .skill-header {
       display: flex;
@@ -513,7 +610,10 @@
       align-items: center;
     }
 
-    .skill-name { font-size: 1rem; font-weight: 700; }
+    .skill-name {
+      font-size: 1rem;
+      font-weight: 700;
+    }
 
     .skill-pct {
       font-size: 0.95rem;
@@ -542,6 +642,7 @@
       transform: translateY(28px);
       transition: opacity 0.65s ease, transform 0.65s ease;
     }
+
     .fade.visible {
       opacity: 1;
       transform: translateY(0);
@@ -606,7 +707,7 @@
         </div>
         <div class="info-item">
           <span class="info-label">전공</span>
-          <span class="info-value">컴퓨터공학과 게임콘텐츠 전공</span>
+          <span class="info-value">컴퓨터공학과 게임콘텐츠전공</span>
         </div>
         <div class="info-item">
           <span class="info-label">재학 기간</span>
@@ -616,7 +717,9 @@
     </div>
 
     <div class="card fade">
-      <div style="font-size: 0.85rem; font-weight: 700; color: var(--text-sub); margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.5px;">강점</div>
+      <div style="font-size: 0.85rem; font-weight: 700; color: var(--text-sub); margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.5px;">
+        강점
+      </div>
       <div class="chip-row">
         <span class="chip">커뮤니케이션 능력</span>
         <span class="chip">일본어 회화 (N1)</span>
@@ -624,10 +727,13 @@
         <span class="chip">빠른 요구사항 이해</span>
         <span class="chip">팀 리더십</span>
       </div>
-      <div style="font-size: 0.85rem; font-weight: 700; color: var(--text-sub); margin-top: 22px; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.5px;">사용 기술</div>
+      <div style="font-size: 0.85rem; font-weight: 700; color: var(--text-sub); margin-top: 22px; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.5px;">
+        사용 기술
+      </div>
       <div class="chip-row">
         <span class="chip gray">Unity C#</span>
         <span class="chip gray">Git (중급)</span>
+        <span class="chip gray">MS Office</span>
       </div>
     </div>
   </section>
@@ -691,22 +797,34 @@
       <div class="cert-card">
         <div class="cert-icon">📋</div>
         <div class="cert-name">ISTQB</div>
-        <div class="cert-level">Foundation Level<br>국제 소프트웨어 테스팅 자격</div>
+        <div class="cert-level">
+          Foundation Level<br>
+          국제 소프트웨어 테스팅 자격
+        </div>
       </div>
       <div class="cert-card">
         <div class="cert-icon">🔍</div>
         <div class="cert-name">CSTS</div>
-        <div class="cert-level">Foundation Level<br>소프트웨어 테스트 전문가</div>
+        <div class="cert-level">
+          Foundation Level<br>
+          소프트웨어 테스트 전문가
+        </div>
       </div>
       <div class="cert-card">
         <div class="cert-icon">🇯🇵</div>
         <div class="cert-name">JLPT N1</div>
-        <div class="cert-level">일본어능력시험 최상위 등급<br>비즈니스 회화 수준</div>
+        <div class="cert-level">
+          일본어능력시험 최상위 등급<br>
+          비즈니스 회화 수준
+        </div>
       </div>
       <div class="cert-card">
         <div class="cert-icon">💻</div>
         <div class="cert-name">컴활 2급</div>
-        <div class="cert-level">컴퓨터활용능력 2급<br>대한상공회의소 공인</div>
+        <div class="cert-level">
+          컴퓨터활용능력 2급<br>
+          대한상공회의소 공인
+        </div>
       </div>
     </div>
 
@@ -724,16 +842,18 @@
 
       <div class="gallery-divider" style="margin: 0;"></div>
       <div style="padding: 20px 32px 12px;">
-        <div style="font-size: 0.85rem; font-weight: 700; color: var(--text-sub); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px;">게임 스크린샷</div>
+        <div style="font-size: 0.85rem; font-weight: 700; color: var(--text-sub); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px;">
+          게임 스크린샷
+        </div>
       </div>
       <div class="gallery">
-        <img src="https://d2x8kymwjom7h7.cloudfront.net/live/application_no/SGS0104044/images/게임화면_ts_1779620832787.PNG"   alt="게임화면" />
-        <img src="https://d2x8kymwjom7h7.cloudfront.net/live/application_no/SGS0104044/images/전투화면_ts_1779620886151.PNG"   alt="전투화면" />
-        <img src="https://d2x8kymwjom7h7.cloudfront.net/live/application_no/SGS0104044/images/노드선택_ts_1779620841830.PNG"   alt="노드선택" />
-        <img src="https://d2x8kymwjom7h7.cloudfront.net/live/application_no/SGS0104044/images/템선택_ts_1779620877649.PNG"     alt="템선택" />
-        <img src="https://d2x8kymwjom7h7.cloudfront.net/live/application_no/SGS0104044/images/상점_ts_1779620905514.PNG"       alt="상점" />
-        <img src="https://d2x8kymwjom7h7.cloudfront.net/live/application_no/SGS0104044/images/영구스탯강화_ts_1779620866206.PNG" alt="영구스탯강화" />
-        <img src="https://d2x8kymwjom7h7.cloudfront.net/live/application_no/SGS0104044/images/상점%20휴식_ts_1779620856148.PNG" alt="상점휴식" />
+        <img src="https://d2x8kymwjom7h7.cloudfront.net/live/application_no/SGS0104044/images/게임화면_ts_1779620832787.PNG"      alt="게임화면" />
+        <img src="https://d2x8kymwjom7h7.cloudfront.net/live/application_no/SGS0104044/images/전투화면_ts_1779620886151.PNG"      alt="전투화면" />
+        <img src="https://d2x8kymwjom7h7.cloudfront.net/live/application_no/SGS0104044/images/노드선택_ts_1779620841830.PNG"      alt="노드선택" />
+        <img src="https://d2x8kymwjom7h7.cloudfront.net/live/application_no/SGS0104044/images/템선택_ts_1779620877649.PNG"        alt="템선택" />
+        <img src="https://d2x8kymwjom7h7.cloudfront.net/live/application_no/SGS0104044/images/상점_ts_1779620905514.PNG"          alt="상점" />
+        <img src="https://d2x8kymwjom7h7.cloudfront.net/live/application_no/SGS0104044/images/영구스탯강화_ts_1779620866206.PNG"  alt="영구스탯강화" />
+        <img src="https://d2x8kymwjom7h7.cloudfront.net/live/application_no/SGS0104044/images/상점%20휴식_ts_1779620856148.PNG"   alt="상점휴식" />
         <img src="https://d2x8kymwjom7h7.cloudfront.net/live/application_no/SGS0104044/images/방클리어%20보상_ts_1779620917043.PNG" alt="방클리어보상" />
       </div>
       <div class="gallery-divider"></div>
@@ -848,10 +968,6 @@
       <div class="value-card">
         <div class="value-q">개발 철학</div>
         <div class="value-a">마감 스케줄은 지키면서 개발하자</div>
-      </div>
-      <div class="value-card">
-        <div class="value-q">해외 취업</div>
-        <div class="value-a">관심 있음 (일본어 강점 보유)</div>
       </div>
     </div>
   </section>

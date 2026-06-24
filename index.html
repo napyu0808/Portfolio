@@ -502,6 +502,40 @@
     footer .note { margin-top: 8px; font-size: 0.9rem; }
     footer .copy { margin-top: 24px; font-size: 0.82rem; opacity: 0.4; }
 
+    /* ── SKILL BAR ── */
+    .skill-list { display: flex; flex-direction: column; gap: 18px; }
+
+    .skill-item { display: flex; flex-direction: column; gap: 7px; }
+
+    .skill-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .skill-name { font-size: 1rem; font-weight: 700; }
+
+    .skill-pct {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    .skill-track {
+      height: 8px;
+      background: var(--surface2);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .skill-fill {
+      height: 100%;
+      background: var(--accent);
+      border-radius: 999px;
+      width: 0;
+      transition: width 1s ease;
+    }
+
     /* ── FADE IN ── */
     .fade {
       opacity: 0;
@@ -538,6 +572,7 @@
 <!-- ── NAV ── -->
 <nav>
   <a href="#about">소개</a>
+  <a href="#skills">기술</a>
   <a href="#cert">자격증</a>
   <a href="#project">프로젝트</a>
   <a href="#activity">활동</a>
@@ -593,6 +628,57 @@
       <div class="chip-row">
         <span class="chip gray">Unity C#</span>
         <span class="chip gray">Git (중급)</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 기술 ── -->
+  <section id="skills">
+    <div class="section-title">보유 기술</div>
+
+    <div class="card fade">
+      <div class="skill-list">
+
+        <div class="skill-item">
+          <div class="skill-header">
+            <span class="skill-name">Excel / 스프레드시트</span>
+            <span class="skill-pct">90%</span>
+          </div>
+          <div class="skill-track">
+            <div class="skill-fill" data-pct="90"></div>
+          </div>
+        </div>
+
+        <div class="skill-item">
+          <div class="skill-header">
+            <span class="skill-name">Unity C#</span>
+            <span class="skill-pct">80%</span>
+          </div>
+          <div class="skill-track">
+            <div class="skill-fill" data-pct="80"></div>
+          </div>
+        </div>
+
+        <div class="skill-item">
+          <div class="skill-header">
+            <span class="skill-name">테스트케이스 작성</span>
+            <span class="skill-pct">90%</span>
+          </div>
+          <div class="skill-track">
+            <div class="skill-fill" data-pct="90"></div>
+          </div>
+        </div>
+
+        <div class="skill-item">
+          <div class="skill-header">
+            <span class="skill-name">버그 리포팅</span>
+            <span class="skill-pct">100%</span>
+          </div>
+          <div class="skill-track">
+            <div class="skill-fill" data-pct="100"></div>
+          </div>
+        </div>
+
       </div>
     </div>
   </section>
@@ -783,6 +869,20 @@
   }, { threshold: 0.12 });
 
   document.querySelectorAll('.fade').forEach(el => observer.observe(el));
+
+  // 스킬 바 애니메이션
+  const barObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.querySelectorAll('.skill-fill').forEach(bar => {
+          bar.style.width = bar.dataset.pct + '%';
+        });
+        barObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.3 });
+
+  document.querySelectorAll('#skills .card').forEach(el => barObserver.observe(el));
 </script>
 
 <!-- ── FOOTER ── -->

@@ -276,6 +276,7 @@
       font-size: 0.9rem;
       color: var(--text-sub);
       line-height: 1.5;
+      word-break: keep-all;
     }
 
     .cert-highlight {
@@ -561,6 +562,7 @@
     .value-a {
       font-size: 1.05rem;
       font-weight: 700;
+      word-break: keep-all;
     }
 
     /* ── FOOTER ── */
@@ -657,9 +659,9 @@
   <div class="hero-content">
     <div class="avatar">🎮</div>
     <h1>이진혁</h1>
-    <div class="tagline">게임 QA 지망생</div>
+    <div class="tagline">게임 QA 테스터</div>
     <div class="intro">
-      다양한 장르의 게임 경험과 꼼꼼한 성격을 바탕으로 QA를 준비 중인 신입입니다.
+      다양한 장르의 게임 경험과 꼼꼼한 분석력을 바탕으로<br>게임 품질을 책임지는 QA 엔지니어입니다.
     </div>
     <div class="badge-row">
       <span class="badge">QA 지망</span>
@@ -712,7 +714,7 @@
         </div>
         <div class="info-item">
           <span class="info-label">재학 기간</span>
-          <span class="info-value">2021 – 2027 (졸업 예정)</span>
+          <span class="info-value">2021 – 2027</span>
         </div>
       </div>
     </div>
@@ -829,8 +831,22 @@
       </div>
     </div>
 
-    <div class="cert-highlight fade">
-      ISTQB · CSTS는 소프트웨어 테스팅 분야의 국제 · 국내 대표 자격증입니다.
+    <div class="project-card fade" style="margin-top: 20px; margin-bottom: 16px;">
+      <div class="project-body" style="padding: 20px 28px;">
+        <div class="project-header" style="margin-bottom: 10px;">
+          <div style="font-size: 1.1rem; font-weight: 800; color: var(--accent);">🤖 CSTS 공부용 웹앱 제작</div>
+          <a class="project-link" href="csts_quiz_fast.html" target="_blank" rel="noopener" style="font-size: 0.88rem; padding: 6px 14px;">
+            ▶ 앱 열기
+          </a>
+        </div>
+        <div class="project-desc" style="font-size: 0.95rem; margin-bottom: 0;">
+          CSTS 자격증 취득을 위해 AI를 활용해 직접 제작한 퀴즈 학습 웹앱입니다.
+        </div>
+      </div>
+    </div>
+
+    <div class="cert-highlight fade" style="word-break: keep-all;">
+      ISTQB · CSTS는 소프트웨어 테스팅 분야의 국제 · 국내 대표 자격증입니다.<br>
       재학 중 QA 전문 역량을 체계적으로 준비한 것이 핵심 차별화 강점입니다.
     </div>
   </section>
@@ -894,7 +910,7 @@
     <div class="project-card fade">
       <div class="project-body">
         <div class="project-header">
-          <div class="project-name">자기소개 영상</div>
+          <div class="project-name">AI를 활용한 자기소개 영상</div>
           <a class="project-link" href="video.html" target="_blank" rel="noopener">
             ▶ 영상 보기
           </a>
@@ -979,15 +995,15 @@
     <div class="values-grid fade" style="margin-top: 16px;">
       <div class="value-card">
         <div class="value-q">문제 해결 방식</div>
-        <div class="value-a">정보 탐색 → 해결 or 수용 판단의 실용적 접근</div>
+        <div class="value-a">정보 탐색 → 해결 or<br>수용 판단의 실용적 접근</div>
       </div>
       <div class="value-card">
         <div class="value-q">가치관</div>
-        <div class="value-a">오늘의 성실이 내일의 여유가 된다</div>
+        <div class="value-a">오늘의 성실이<br>내일의 여유가 된다</div>
       </div>
       <div class="value-card">
         <div class="value-q">개발 철학</div>
-        <div class="value-a">마감 스케줄은 지키면서 개발하자</div>
+        <div class="value-a">마감 스케줄은<br>지키면서 개발하자</div>
       </div>
     </div>
   </section>
@@ -1024,9 +1040,8 @@
 <!-- ── FOOTER ── -->
 <footer id="contact">
   <div class="email">napyu0808@naver.com</div>
-  <div>이진혁 · 게임 QA 지망생</div>
-  <div class="note">GitHub / LinkedIn 추후 업데이트 예정</div>
-  <div class="copy">© 2026 이진혁</div>
+  <div>이진혁 · 게임 QA 테스터</div>
+<div class="copy">© 2026 이진혁</div>
 </footer>
 
 </body>

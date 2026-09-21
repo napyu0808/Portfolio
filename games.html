@@ -191,6 +191,9 @@
     { id: 'coop',    name: '협동 / 호러 / 소셜',   color: '#495057' },
     { id: 'sim',     name: '시뮬레이션 / 경영',    color: '#1098AD' },
     { id: 'mmo',     name: 'MMORPG',               color: '#9C6644' },
+    { id: 'collect', name: '수집 / 육성',          color: '#74B816' },
+    { id: 'defense', name: '디펜스 / 전략',        color: '#5F3DC4' },
+    { id: 'casual',  name: '퍼즐 / 캐주얼',        color: '#3BC9DB' },
   ];
 
   // 전체 게임 목록 (hours: 숫자 플레이타임, record: 시간 대신 표기할 기록)
@@ -275,6 +278,55 @@
       featured: '에픽 퀘스트 16 진행 중 적을 추적하지 못하는 버그를 발견' },
     { name: '리니지 M', genre: 'mmo', hours: 2, tier: '암흑기사 32레벨',
       featured: '데미지 표기가 없고 강화 재료 수급이 어려워 성장 폭을 가늠하기 힘든 구조를 파악' },
+
+    // 수집 / 육성 (모바일)
+    { name: '프린세스커넥트 Re:Dive', genre: 'collect', record: '3년' },
+    { name: '몬스터스트라이크', genre: 'collect', record: '3년' },
+    { name: 'Pokemon GO', genre: 'collect', hours: 300 },
+    { name: '트릭컬 리바이브', genre: 'collect', hours: 100 },
+    { name: '가디언 테일즈', genre: 'collect', hours: 100 },
+    { name: '드래곤빌리지', genre: 'collect', hours: 100 },
+    { name: 'Pokemon Champions', genre: 'collect', hours: 30, tier: '마스터볼' },
+    { name: '마스터 오브 이터니티', genre: 'collect', hours: 20 },
+    { name: '서머너즈워', genre: 'collect', hours: 10 },
+    { name: '스텔라소라', genre: 'collect', hours: 3 },
+
+    // 디펜스 / 전략 (모바일)
+    { name: '클래시 로얄', genre: 'defense', record: '3년' },
+    { name: '명일방주', genre: 'defense', record: '2년' },
+    { name: '냥코대전쟁', genre: 'defense', record: '1년' },
+    { name: '운빨존많겜', genre: 'defense', record: '1년' },
+    { name: '클래시 오브 클랜', genre: 'defense', record: '1년' },
+    { name: '냥냥 시노비', genre: 'defense', hours: 100 },
+    { name: '던전메이커', genre: 'defense', hours: 80 },
+    { name: '짤툰 랜덤 디펜스', genre: 'defense', hours: 50 },
+
+    // 방치형 / 클리커 (모바일)
+    { name: '카피바라 Go!', genre: 'idle', record: '1년' },
+    { name: 'ALTER EGO', genre: 'idle', record: '엔딩' },
+    { name: '444번의 돌아왔어', genre: 'idle', record: '엔딩' },
+    { name: '거지키우기', genre: 'idle', record: '엔딩' },
+    { name: '뒷산에서 보석캐기', genre: 'idle', record: '엔딩' },
+    { name: '디지몬 UP', genre: 'idle', record: '7일' },
+
+    // 퍼즐 / 캐주얼 (모바일)
+    { name: '드래곤 플라이트', genre: 'casual', record: '1년' },
+    { name: 'Meowdoku: 두뇌 퍼즐게임', genre: 'casual', hours: 3 },
+    { name: 'Parking Jam: Car Parking Games', genre: 'casual' },
+    { name: 'Angry Birds Rio', genre: 'casual' },
+    { name: 'Temple Run', genre: 'casual' },
+    { name: '길건너 친구들', genre: 'casual' },
+
+    // 그 밖의 모바일 게임 (기존 장르에 추가)
+    { name: '궁수의 전설', genre: 'rogue', record: '약 1개월' },
+    { name: 'Soul Knight', genre: 'rogue' },
+    { name: '듀엣 나이트 어비스', genre: 'action', hours: 3 },
+    { name: '달빛조각사', genre: 'mmo', record: '1개월' },
+    { name: '말랑말랑 목장', genre: 'sim' },
+    { name: 'Plague Inc.', genre: 'sim' },
+    { name: '도망가 친구들', genre: 'coop' },
+    { name: '작혼', genre: 'card', record: '6년' },
+    { name: 'Pokemon Sword', genre: 'rpg', hours: 200 },
   ];
 
   // 대표 게임 표시 순서
@@ -285,7 +337,7 @@
 
   const genreOf = id => GENRES.find(g => g.id === id);
   const fmtHours = h => h.toLocaleString('ko-KR', { maximumFractionDigits: 1 }) + '시간';
-  const recordOf = g => g.hours != null ? fmtHours(g.hours) : g.record;
+  const recordOf = g => g.hours != null ? fmtHours(g.hours) : (g.record || '');
   const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 
   // 요약 문장
@@ -313,7 +365,7 @@
   }).join('');
 
   // 장르별 박스 (게임 수가 많은 장르부터, 각 장르 안은 플레이타임 순)
-  const sortKey = g => g.hours != null ? g.hours : 100000; // 기간 표기 게임은 맨 위로
+  const sortKey = g => g.hours != null ? g.hours : (g.record ? 100000 : -1); // 기간 표기 게임은 맨 위로, 기록 없는 게임은 맨 아래로
   const boxes = GENRES
     .map(genre => {
       const list = GAMES.filter(g => g.genre === genre.id).sort((a, b) => sortKey(b) - sortKey(a));

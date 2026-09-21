@@ -35,7 +35,7 @@
     line-height: 1.15;
     margin: 6px 0 14px;
   }
-  header p { color: var(--muted); font-size: 16px; max-width: 640px; }
+  header p { color: var(--muted); font-size: 16px; max-width: 640px; word-break: keep-all; text-wrap: balance; }
   header p strong { color: var(--ink); font-weight: 700; }
 
   h2 {
@@ -44,7 +44,7 @@
     letter-spacing: -0.02em;
     margin-bottom: 6px;
   }
-  .section-desc { color: var(--muted); font-size: 14px; margin-bottom: 20px; }
+  .section-desc { color: var(--muted); font-size: 14px; margin-bottom: 20px; word-break: keep-all; text-wrap: pretty; }
   section + section { margin-top: 64px; }
 
   /* 대표 게임 */
@@ -67,7 +67,7 @@
     font-size: 12px; font-weight: 600; color: var(--muted);
   }
   .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--genre); flex: none; }
-  .f-title { font-size: 17px; font-weight: 700; margin: 6px 0 12px; line-height: 1.35; word-break: keep-all; }
+  .f-title { font-size: 17px; font-weight: 700; margin: 6px 0 12px; line-height: 1.35; word-break: keep-all; text-wrap: balance; }
   .f-record { font-size: 26px; font-weight: 800; letter-spacing: -0.02em; line-height: 1.1; }
   .f-sub { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 8px; min-height: 22px; }
   .chip {
@@ -81,6 +81,7 @@
     margin-top: 14px; padding-top: 14px;
     border-top: 1px solid #EDF0F4;
     word-break: keep-all;
+    text-wrap: balance;
   }
 
   /* 장르 그리드 */
@@ -126,7 +127,9 @@
     border-top: 1px solid var(--rule);
     font-size: 13.5px; color: var(--muted);
     display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px;
+    word-break: keep-all;
   }
+  footer span { text-wrap: balance; }
   footer a { color: var(--accent); font-weight: 600; text-decoration: none; }
   footer a:hover { text-decoration: underline; }
   footer a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }

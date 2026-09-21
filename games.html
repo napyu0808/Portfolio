@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>이진혁 | 게임 플레이 이력</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<style>
+  :root {
+    --bg: #F2F4F8;
+    --paper: #FFFFFF;
+    --ink: #172033;
+    --muted: #5B6478;
+    --rule: #D5DAE3;
+    --accent: #2C5BE8;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Pretendard', -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.6;
+    font-variant-numeric: tabular-nums;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 1200px; margin: 0 auto; padding: 64px 24px 80px; }
+
+  /* 헤더 */
+  header { margin-bottom: 56px; }
+  header .name { font-size: 15px; font-weight: 600; color: var(--muted); }
+  header h1 {
+    font-size: clamp(32px, 5vw, 52px);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.15;
+    margin: 6px 0 14px;
+  }
+  header p { color: var(--muted); font-size: 16px; max-width: 640px; }
+  header p strong { color: var(--ink); font-weight: 700; }
+
+  h2 {
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    margin-bottom: 6px;
+  }
+  .section-desc { color: var(--muted); font-size: 14px; margin-bottom: 20px; }
+  section + section { margin-top: 64px; }
+
+  /* 대표 게임 */
+  .featured {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 14px;
+  }
+  .f-card {
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    border-top: 4px solid var(--genre);
+    border-radius: 6px;
+    padding: 18px 16px 20px;
+    display: flex;
+    flex-direction: column;
+  }
+  .f-genre {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 12px; font-weight: 600; color: var(--muted);
+  }
+  .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--genre); flex: none; }
+  .f-title { font-size: 17px; font-weight: 700; margin: 6px 0 12px; line-height: 1.35; word-break: keep-all; }
+  .f-record { font-size: 26px; font-weight: 800; letter-spacing: -0.02em; line-height: 1.1; }
+  .f-sub { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 8px; min-height: 22px; }
+  .chip {
+    font-size: 11.5px; font-weight: 600;
+    padding: 2px 8px; border-radius: 999px;
+    background: #EDF1FD; color: var(--accent);
+  }
+  .chip.plain { background: #F1F3F6; color: var(--muted); }
+  .f-comment {
+    font-size: 13.5px; color: #3A4356;
+    margin-top: 14px; padding-top: 14px;
+    border-top: 1px solid #EDF0F4;
+    word-break: keep-all;
+  }
+
+  /* 장르 그리드 */
+  .genres {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    align-items: start;
+  }
+  .g-box {
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  .g-head {
+    display: flex; align-items: center; gap: 8px;
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--rule);
+    border-left: 4px solid var(--genre);
+  }
+  .g-name { font-size: 15px; font-weight: 700; }
+  .g-meta { margin-left: auto; font-size: 12.5px; color: var(--muted); white-space: nowrap; }
+  .g-list { list-style: none; padding: 6px 0; }
+  .g-list li {
+    display: flex; align-items: baseline; gap: 10px;
+    padding: 7px 16px;
+    font-size: 14px;
+  }
+  .g-list li + li { border-top: 1px solid #F1F3F6; }
+  .g-game { flex: 1; word-break: keep-all; }
+  .g-list li.is-featured .g-game { font-weight: 700; }
+  .g-list li.is-featured .g-game::before {
+    content: ""; display: inline-block; width: 6px; height: 6px;
+    background: var(--accent); border-radius: 50%;
+    margin-right: 7px; vertical-align: middle; position: relative; top: -1px;
+  }
+  .g-tier { font-size: 11.5px; font-weight: 600; color: var(--accent); white-space: nowrap; }
+  .g-hours { font-size: 13.5px; color: var(--muted); white-space: nowrap; min-width: 64px; text-align: right; }
+
+  footer {
+    margin-top: 64px; padding-top: 24px;
+    border-top: 1px solid var(--rule);
+    font-size: 13.5px; color: var(--muted);
+    display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px;
+  }
+  footer a { color: var(--accent); font-weight: 600; text-decoration: none; }
+  footer a:hover { text-decoration: underline; }
+  footer a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
+
+  @media (max-width: 1080px) {
+    .featured { grid-template-columns: repeat(3, 1fr); }
+  }
+  @media (max-width: 860px) {
+    .featured { grid-template-columns: repeat(2, 1fr); }
+    .genres { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 560px) {
+    .wrap { padding: 40px 16px 56px; }
+    .featured, .genres { grid-template-columns: 1fr; }
+  }
+  @media print {
+    body { background: #fff; }
+    .f-card, .g-box { break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="name">이진혁 · 게임 QA 지원</div>
+    <h1>게임 플레이 이력</h1>
+    <p id="summary"></p>
+  </header>
+
+  <section>
+    <h2>대표 게임</h2>
+    <p class="section-desc">오래 플레이했거나 깊이 파고든 게임 10개와, 플레이하며 관찰한 점입니다.</p>
+    <div class="featured" id="featured"></div>
+  </section>
+
+  <section>
+    <h2>전체 플레이 이력</h2>
+    <p class="section-desc">장르별로 정리했습니다. 파란 점이 붙은 게임은 위의 대표 게임입니다.</p>
+    <div class="genres" id="genres"></div>
+  </section>
+
+  <footer>
+    <span>플레이타임은 Steam, Nintendo Switch 기록 기준이며 모바일 게임은 플레이 기간으로 표기했습니다.</span>
+    <a href="https://napyu0808.github.io/Portfolio/">포트폴리오 보기</a>
+  </footer>
+
+</div>
+
+<script>
+  // 장르 정의 (색상은 장르 구분용)
+  const GENRES = [
+    { id: 'rpg',     name: 'RPG / 스토리',        color: '#7C4DDB' },
+    { id: 'shooter', name: '슈터',                 color: '#D9480F' },
+    { id: 'moba',    name: 'MOBA / 배틀로얄',      color: '#1C7ED6' },
+    { id: 'card',    name: '덱빌딩 / 카드',        color: '#0CA678' },
+    { id: 'rogue',   name: '로그라이트 액션',      color: '#E8590C' },
+    { id: 'idle',    name: '방치형 / 클리커',      color: '#F59F00' },
+    { id: 'rhythm',  name: '리듬',                 color: '#E64980' },
+    { id: 'action',  name: '액션 RPG / 헌팅',      color: '#2F9E44' },
+    { id: 'fight',   name: '대전격투',             color: '#C92A2A' },
+    { id: 'coop',    name: '협동 / 호러 / 소셜',   color: '#495057' },
+    { id: 'sim',     name: '시뮬레이션 / 경영',    color: '#1098AD' },
+  ];
+
+  // 전체 게임 목록 (hours: 숫자 플레이타임, record: 시간 대신 표기할 기록)
+  const GAMES = [
+    // RPG / 스토리
+    { name: '림버스 컴퍼니', genre: 'rpg', hours: 2000, note: '오픈 첫날부터',
+      featured: '오픈 초기부터 편의성 개편과 방향성이 잡혀가는 과정을 지켜보며 라이브 서비스의 흐름을 경험' },
+    { name: '페르소나 5 더 로열', genre: 'rpg', hours: 131,
+      featured: '전작의 시스템을 기반으로 차별화 요소를 더하고, 놓치기 쉬운 서브 스토리로 다회차 플레이를 유도하는 설계가 인상적' },
+    { name: '페르소나 3 리로드', genre: 'rpg', hours: 112 },
+    { name: 'Library Of Ruina', genre: 'rpg', hours: 70.4 },
+    { name: '마법소녀의 마녀재판', genre: 'rpg', hours: 25.8 },
+
+    // 슈터
+    { name: 'RAINBOW 6 SIEGE', genre: 'shooter', hours: 1037.9, tier: '플래티넘',
+      featured: '방대한 맵과 전략 요소로 인해 신규·복귀 유저의 진입장벽이 높다는 점을 확인' },
+    { name: 'Warframe', genre: 'shooter', hours: 684.5,
+      featured: '일일 퀘스트에 랜덤 페널티와 보상을 결합해 반복 플레이에 변화를 주는 설계가 인상적' },
+    { name: 'PUBG', genre: 'shooter', hours: 266.2 },
+    { name: '스플래툰 3', genre: 'shooter', hours: 150 },
+    { name: 'Back 4 Blood', genre: 'shooter', hours: 13.6 },
+    { name: 'Void Diver', genre: 'shooter', hours: 4.3, note: '익스트랙션' },
+
+    // MOBA / 배틀로얄
+    { name: '리그 오브 레전드', genre: 'moba', record: '10년 이상', tier: '에메랄드',
+      featured: '173명의 챔피언과 아이템이 얽힌 구조 속에서 밸런스 조정의 어려움을 체감' },
+    { name: '이터널리턴', genre: 'moba', record: '베타부터', tier: '데미갓',
+      featured: '시즌마다 추가되는 새로운 요소가 다양성을 높이는 동시에 유저의 학습 부담도 늘린다는 점을 실감' },
+
+    // 덱빌딩 / 카드
+    { name: 'Shadowverse', genre: 'card', hours: 175.6 },
+    { name: 'Shadowverse: World Beyond', genre: 'card', hours: 174, tier: '마스터',
+      featured: '시즌 기간에 비해 카드 풀이 좁아 메타가 빠르게 고착되고 유저 피로도가 쌓이는 현상을 관찰' },
+    { name: 'Slay the Spire', genre: 'card', hours: 121.7 },
+    { name: 'Yu-Gi-Oh! Master Duel', genre: 'card', hours: 28.7 },
+    { name: 'Inscryption', genre: 'card', hours: 10.4 },
+    { name: 'Hell Deck', genre: 'card', hours: 9.2 },
+
+    // 로그라이트 액션
+    { name: 'The Binding of Isaac', genre: 'rogue', hours: 119.2,
+      featured: '장기간 업데이트로 아이템을 꾸준히 추가하며 수명을 늘리는 로그라이트의 콘텐츠 확장 구조를 이해' },
+    { name: 'Dungreed', genre: 'rogue', hours: 73.8 },
+    { name: 'Heroes of Hammerwatch', genre: 'rogue', hours: 56.3 },
+    { name: 'Vampire Survivors', genre: 'rogue', hours: 51.2 },
+    { name: '세피리아', genre: 'rogue', hours: 48.6 },
+    { name: 'Enter the Gungeon', genre: 'rogue', hours: 29.4 },
+    { name: 'Risk of Rain 2', genre: 'rogue', hours: 23.4 },
+    { name: 'Lost Castle', genre: 'rogue', hours: 17.7 },
+    { name: 'Risk of Rain', genre: 'rogue', hours: 15.5 },
+    { name: 'Gunfire Reborn', genre: 'rogue', hours: 12.9 },
+
+    // 방치형 / 클리커
+    { name: 'TBH: 태스크바 히어로', genre: 'idle', hours: 619.3,
+      featured: '스테이지 보상 상자의 운 요소가 성장에 크게 작용해 유저 간 격차가 벌어지는 구조를 관찰' },
+    { name: 'TAP NINJA', genre: 'idle', hours: 32.6 },
+
+    // 리듬
+    { name: '프로젝트 세카이', genre: 'rhythm', record: '4년', tier: '플래티넘',
+      featured: '상한 없는 이벤트 랭킹 구조가 유저에게는 큰 부담이지만 매출에는 크게 기여하는 양면성을 체감' },
+    { name: 'hololive Dreams', genre: 'rhythm', hours: 78 },
+
+    // 액션 RPG / 헌팅
+    { name: 'Monster Hunter World', genre: 'action', hours: 74.9 },
+    { name: 'Trove', genre: 'action', hours: 43.4 },
+    { name: 'Hollow Knight', genre: 'action', hours: 43 },
+
+    // 대전격투
+    { name: 'TEKKEN 7', genre: 'fight', hours: 24.8 },
+    { name: 'Granblue Fantasy Versus: Rising', genre: 'fight', hours: 14.8, tier: 'S+' },
+    { name: 'Skullgirls', genre: 'fight', hours: 8.7 },
+    { name: 'Guilty Gear Xrd REV 2', genre: 'fight', hours: 8.4 },
+
+    // 협동 / 호러 / 소셜
+    { name: 'Dead by Daylight', genre: 'coop', hours: 31.8 },
+    { name: 'Among Us', genre: 'coop', hours: 27.9 },
+    { name: 'Goose Goose Duck', genre: 'coop', hours: 19.1 },
+    { name: 'Phasmophobia', genre: 'coop', hours: 10.7 },
+
+    // 시뮬레이션 / 경영
+    { name: 'Lobotomy Corporation', genre: 'sim', hours: 97.7 },
+  ];
+
+  // 대표 게임 표시 순서
+  const FEATURED_ORDER = [
+    '림버스 컴퍼니', 'RAINBOW 6 SIEGE', '리그 오브 레전드', '이터널리턴', 'Warframe',
+    'TBH: 태스크바 히어로', '프로젝트 세카이', 'Shadowverse: World Beyond', 'The Binding of Isaac', '페르소나 5 더 로열',
+  ];
+
+  const genreOf = id => GENRES.find(g => g.id === id);
+  const fmtHours = h => h.toLocaleString('ko-KR', { maximumFractionDigits: 1 }) + '시간';
+  const recordOf = g => g.hours != null ? fmtHours(g.hours) : g.record;
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+
+  // 요약 문장
+  const totalHours = GAMES.reduce((sum, g) => sum + (g.hours || 0), 0);
+  document.getElementById('summary').innerHTML =
+    `PC, 스위치, 모바일에서 <strong>${GAMES.length}개 게임</strong>을 <strong>${GENRES.length}개 장르</strong>에 걸쳐 플레이했고, ` +
+    `기록이 남아 있는 플레이타임만 합쳐도 <strong>${Math.round(totalHours).toLocaleString('ko-KR')}시간</strong>입니다.`;
+
+  // 대표 게임 카드
+  document.getElementById('featured').innerHTML = FEATURED_ORDER.map(name => {
+    const g = GAMES.find(x => x.name === name);
+    const genre = genreOf(g.genre);
+    const chips = [
+      g.tier ? `<span class="chip">${esc(g.tier)}</span>` : '',
+      g.note ? `<span class="chip plain">${esc(g.note)}</span>` : '',
+    ].join('');
+    return `
+      <article class="f-card" style="--genre:${genre.color}">
+        <div class="f-genre"><span class="dot"></span>${esc(genre.name)}</div>
+        <h3 class="f-title">${esc(g.name)}</h3>
+        <div class="f-record">${esc(recordOf(g))}</div>
+        <div class="f-sub">${chips}</div>
+        <p class="f-comment">${esc(g.featured)}</p>
+      </article>`;
+  }).join('');
+
+  // 장르별 박스 (게임 수가 많은 장르부터, 각 장르 안은 플레이타임 순)
+  const sortKey = g => g.hours != null ? g.hours : 100000; // 기간 표기 게임은 맨 위로
+  const boxes = GENRES
+    .map(genre => {
+      const list = GAMES.filter(g => g.genre === genre.id).sort((a, b) => sortKey(b) - sortKey(a));
+      const sum = list.reduce((s, g) => s + (g.hours || 0), 0);
+      return { genre, list, sum };
+    })
+    .sort((a, b) => b.list.length - a.list.length);
+
+  document.getElementById('genres').innerHTML = boxes.map(({ genre, list, sum }) => `
+    <div class="g-box" style="--genre:${genre.color}">
+      <div class="g-head">
+        <span class="dot"></span>
+        <span class="g-name">${esc(genre.name)}</span>
+        <span class="g-meta">${list.length}개${sum ? ` / ${fmtHours(Math.round(sum * 10) / 10)}` : ''}</span>
+      </div>
+      <ul class="g-list">
+        ${list.map(g => `
+          <li class="${g.featured ? 'is-featured' : ''}">
+            <span class="g-game">${esc(g.name)}</span>
+            ${g.tier ? `<span class="g-tier">${esc(g.tier)}</span>` : ''}
+            <span class="g-hours">${esc(recordOf(g))}</span>
+          </li>`).join('')}
+      </ul>
+    </div>`).join('');
+</script>
+</body>
+</html>

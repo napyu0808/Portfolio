@@ -344,7 +344,7 @@
   const totalHours = GAMES.reduce((sum, g) => sum + (g.hours || 0), 0);
   document.getElementById('summary').innerHTML =
     `PC, 스위치, 모바일에서 <strong>${GAMES.length}개 게임</strong>을 <strong>${GENRES.length}개 장르</strong>에 걸쳐 플레이했고, ` +
-    `기록이 남아 있는 플레이타임만 합쳐도 <strong>${Math.round(totalHours).toLocaleString('ko-KR')}시간</strong>입니다.`;
+    `기록이 남아 있는 플레이타임만 합쳐도 <strong>약 ${(Math.round(totalHours / 100) * 100).toLocaleString('ko-KR')}시간</strong>입니다.`;
 
   // 대표 게임 카드
   document.getElementById('featured').innerHTML = FEATURED_ORDER.map(name => {

@@ -190,6 +190,7 @@
     { id: 'fight',   name: '대전격투',             color: '#C92A2A' },
     { id: 'coop',    name: '협동 / 호러 / 소셜',   color: '#495057' },
     { id: 'sim',     name: '시뮬레이션 / 경영',    color: '#1098AD' },
+    { id: 'mmo',     name: 'MMORPG',               color: '#9C6644' },
   ];
 
   // 전체 게임 목록 (hours: 숫자 플레이타임, record: 시간 대신 표기할 기록)
@@ -206,8 +207,7 @@
     // 슈터
     { name: 'RAINBOW 6 SIEGE', genre: 'shooter', hours: 1037.9, tier: '플래티넘',
       featured: '방대한 맵과 전략 요소로 인해 신규·복귀 유저의 진입장벽이 높다는 점을 확인' },
-    { name: 'Warframe', genre: 'shooter', hours: 684.5,
-      featured: '일일 퀘스트에 랜덤 페널티와 보상을 결합해 반복 플레이에 변화를 주는 설계가 인상적' },
+    { name: 'Warframe', genre: 'shooter', hours: 684.5 },
     { name: 'PUBG', genre: 'shooter', hours: 266.2 },
     { name: '스플래툰 3', genre: 'shooter', hours: 150 },
     { name: 'Back 4 Blood', genre: 'shooter', hours: 13.6 },
@@ -221,8 +221,7 @@
 
     // 덱빌딩 / 카드
     { name: 'Shadowverse', genre: 'card', hours: 175.6 },
-    { name: 'Shadowverse: World Beyond', genre: 'card', hours: 174, tier: '마스터',
-      featured: '시즌 기간에 비해 카드 풀이 좁아 메타가 빠르게 고착되고 유저 피로도가 쌓이는 현상을 관찰' },
+    { name: 'Shadowverse: World Beyond', genre: 'card', hours: 174, tier: '마스터' },
     { name: 'Slay the Spire', genre: 'card', hours: 121.7 },
     { name: 'Yu-Gi-Oh! Master Duel', genre: 'card', hours: 28.7 },
     { name: 'Inscryption', genre: 'card', hours: 10.4 },
@@ -270,12 +269,18 @@
 
     // 시뮬레이션 / 경영
     { name: 'Lobotomy Corporation', genre: 'sim', hours: 97.7 },
+
+    // MMORPG (모바일)
+    { name: '제우스: 오만의 신', genre: 'mmo', hours: 2, tier: '레인저 21레벨',
+      featured: '에픽 퀘스트 16 진행 중 적을 추적하지 못하는 버그를 발견' },
+    { name: '리니지 M', genre: 'mmo', hours: 2, tier: '암흑기사 32레벨',
+      featured: '데미지 표기가 없고 강화 재료 수급이 어려워 성장 폭을 가늠하기 힘든 구조를 파악' },
   ];
 
   // 대표 게임 표시 순서
   const FEATURED_ORDER = [
-    '림버스 컴퍼니', 'RAINBOW 6 SIEGE', '리그 오브 레전드', '이터널리턴', 'Warframe',
-    'TBH: 태스크바 히어로', '프로젝트 세카이', 'Shadowverse: World Beyond', 'The Binding of Isaac', '페르소나 5 더 로열',
+    '림버스 컴퍼니', 'RAINBOW 6 SIEGE', '리그 오브 레전드', '이터널리턴', '제우스: 오만의 신',
+    'TBH: 태스크바 히어로', '프로젝트 세카이', '리니지 M', 'The Binding of Isaac', '페르소나 5 더 로열',
   ];
 
   const genreOf = id => GENRES.find(g => g.id === id);

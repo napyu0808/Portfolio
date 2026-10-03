@@ -117,6 +117,8 @@
   }
 
   .keyline { font-size: 17px; font-weight: 700; line-height: 1.6; margin-bottom: 20px; padding-left: 14px; border-left: 4px solid var(--accent); text-wrap: pretty; }
+  .shots { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 220px)); gap: 16px; margin-top: 14px; }
+  .note-card { border-left: 4px solid var(--muted); }
   .takeaway { font-weight: 700; margin-bottom: 14px; text-wrap: pretty; }
   .summary { margin-top: 24px; }
   .summary h3 { color: var(--accent); font-size: 13px; letter-spacing: 0.04em; margin-bottom: 4px; }
@@ -175,8 +177,8 @@
       <h3>핵심 요약</h3>
       <ul class="facts">
         <li><b>분석 대상</b> 초보 7일 이벤트: 매일 0시에 일차별 미션이 열리고, 달성하면 재화를 받는 신규 유저용 이벤트</li>
-        <li><b>사로잡는 이유</b> 만회는 되지만 미룰 수 없는 마감, 완주 시 레전드 캐릭터, 가려진 다음 일차, 본편 행동을 목표로 바꾸는 미션</li>
-        <li><b>아쉬운 점</b> 1~3일차 보상량이 적게 느껴짐</li>
+        <li><b>사로잡는 이유</b> 확정 레전드 보상이 걸린 누적 게이지, 만회는 되지만 미룰 수 없는 마감, 본편 행동을 목표로 바꾸는 미션</li>
+        <li><b>아쉬운 점</b> 초반 보상량이 적고, 흩어진 소액 보상의 알림 점과 광고·결제 유도가 접속 직후부터 피로감을 줌</li>
       </ul>
     </div>
   </header>
@@ -189,7 +191,7 @@
       <h3>게임과 시스템</h3>
       <p><strong>분석할 시스템은 초보 7일 이벤트입니다.</strong> 매일 0시에 1~7일차 일일 미션이 하루에 하나씩 열리고, 달성하면 인게임 재화를 보상으로 받아 캐릭터를 성장시킬 수 있는 신규 유저용 이벤트입니다.</p>
       <p style="margin-top:12px">게임은 후더덕 서바이벌로, Google Play에서 롤플레잉으로 분류된 뱀서라이크 장르이며 캡처 시점에 인기 앱/게임 차트 2위(평점 4.9)에 올라 있었습니다.</p>
-      <div class="todo">작성 예정: 과금 방식(광고, 결제)과 게임 소개 한두 문장</div>
+      <p style="margin-top:12px"><strong>과금은 광고 시청과 결제 상품으로 이루어집니다.</strong> 광고를 보면 보상을 받는 빠른 순찰과 관람 비밀 보물이 있고, 결제 상품으로는 광고 제거 월간카드(7,500원), 특급 월간카드(13,000원), 특급 종신카드, 소액 패키지인 출항 도움(3,000원) 등이 있습니다.</p>
       <figure class="wide">
         <img src="images/store-chart.png" alt="Google Play 인기 앱/게임 차트에서 후더덕 서바이벌이 2위인 화면" loading="lazy">
         <figcaption>Google Play 인기 차트(인기 앱/게임): 후더덕 서바이벌 2위, 분류 롤플레잉, 평점 4.9</figcaption>
@@ -197,14 +199,14 @@
     </div>
     <div class="card">
       <h3>선정 이유</h3>
-      <p><strong>매일 접속한 이유가 전투가 아니라 이 이벤트의 보상이었기 때문에 골랐습니다.</strong> 3일간 플레이하며 매일 앱을 다시 켜게 만든 가장 큰 요인이 초보 7일 이벤트였습니다. 7일차까지 모든 미션을 완료하면 현재 게임에서 가장 높은 등급인 레전드 캐릭터를 받을 수 있고, 이벤트는 기간이 끝나면 종료됩니다. 그래서 미리 스테이지를 진행해 두어 어떤 미션이 열려도 클리어할 수 있게 해야겠다는 목표의식이 생겼습니다. </p>
+      <p><strong>매일 접속한 이유가 전투가 아니라 이 이벤트의 보상이었기 때문에 골랐습니다.</strong> 3일간 플레이하며 매일 앱을 다시 켜게 만든 가장 큰 요인이 초보 7일 이벤트였습니다. 일일 미션으로 누적 메달을 모으면 레전드 영웅을 확정으로 받을 수 있고 이벤트는 기간이 끝나면 종료되기 때문에, 미리 스테이지를 진행해 두어 어떤 미션이 열려도 클리어할 수 있게 해야겠다는 목표의식이 생겼습니다.</p>
     </div>
   </section>
 
   <section id="structure">
     <div class="sec-no">02</div>
     <h2>시스템 구조</h2>
-    <p class="keyline">매일 0시에 새 일차가 열리고, 본편 플레이로 미션을 달성해 재화를 받아 성장하는 7일짜리 반복 구조입니다.</p>
+    <p class="keyline">매일 0시에 새 일차가 열리고, 본편 플레이로 미션을 달성해 재화와 메달을 받아 성장하는 7일짜리 반복 구조입니다.</p>
     <div class="card">
       <h3>핵심 루프</h3>
       <div class="flow">
@@ -214,28 +216,28 @@
         <span class="arr">→</span>
         <div class="step"><b>3. 본편 플레이</b>스테이지를 진행해 미션 달성</div>
         <span class="arr">→</span>
-        <div class="step"><b>4. 보상 수령</b>인게임 재화 획득</div>
+        <div class="step"><b>4. 보상 수령</b>인게임 재화와 메달 획득, 상단 게이지 상승</div>
         <span class="arr">→</span>
         <div class="step"><b>5. 성장</b>재화로 장비 강화, 더 높은 요구량 대응</div>
       </div>
-      <p class="flow-note">다음 날 0시에 다음 일차가 열리며 반복되고, 7일을 모두 완료하면 레전드 캐릭터를 받습니다.</p>
+      <p class="flow-note">다음 날 0시에 다음 일차가 열리며 반복되고, 누적 메달이 1,080에 이르면 레전드 영웅을 확정으로 받습니다.</p>
     </div>
     <div class="card">
       <h3>구성 요소</h3>
-      <p class="takeaway">핵심은 세 가지입니다. 매일 0시에 새 일차가 열리고, 놓친 일차도 나중에 달성할 수 있으며, 7일을 완료하면 레전드 캐릭터를 받습니다.</p>
+      <p class="takeaway">핵심은 세 가지입니다. 매일 0시에 새 일차가 열리고, 놓친 일차도 나중에 달성할 수 있으며, 미션으로 모은 메달이 1,080에 도달하면 레전드 영웅을 확정으로 받습니다.</p>
       <ul class="facts">
         <li><b>리셋 시간</b> 매일 0시 (이벤트 창의 남은 시간과 현재 시각을 대조해 확인)</li>
         <li><b>주기</b> 24시간마다 다음 일차가 열림 (1일차~7일차). 열리기 전까지 잠겨 있고 미리 볼 수 없음</li>
-        <li><b>완주 보상</b> 7일차까지 완료하면 레전드 등급 캐릭터 (현재 게임 최고 등급)</li>
+        <li><b>최종 보상</b> 누적 메달 1,080을 채우면 레전드 영웅을 확정으로 획득 (어떤 영웅인지는 랜덤)</li>
+        <li><b>누적 게이지</b> 미션을 달성해 받은 메달의 합계가 상단 게이지에 쌓이고, 90 단위로 구간 보상이 있음 (캡처 시점 350)</li>
         <li><b>놓친 일차</b> 나중에 달성해서 보상을 받을 수 있음</li>
         <li><b>기간</b> 이벤트 종료까지 남은 시간이 상단에 표시됨 (캡처 시점 4일 8시간 38분)</li>
         <li><b>미션 종류</b> 장비 장착과 강화, 몬스터 처치, 머니와 다이아 획득, 챕터 클리어, 친구에게 선물하기, 모험 레벨 등</li>
         <li><b>요구량 변화</b> 1일차 → 2일차: 몬스터 처치 2,000 → 10,000마리, 머니 획득 3,000 → 40,000, 다이아 획득 800 → 1,500, 장착 장비 강화 레벨 12 → 15</li>
-        <li><b>미션 구성</b> 일차마다 5개 이상, 미션마다 보상 2종</li>
+        <li><b>미션 구성</b> 일차마다 5개 이상, 미션마다 보상 2종 (메달 포함)</li>
         <li><b>진입 경로</b> 로비 오른쪽 아이콘 열의 "초보7일 이벤트"</li>
-        <li><b>함께 있는 요소</b> 같은 창의 "초특가팩" 탭, 상단의 누적 포인트 게이지(캡처 시점 350, 90·180·270·360·450 구간)</li>
+        <li><b>함께 있는 요소</b> 같은 창의 "초특가팩" 탭</li>
       </ul>
-      <div class="todo">작성 예정: 상단 포인트 게이지가 무엇을 모으는 것인지 (미션 보상의 메달 아이콘과의 관계)</div>
       <div class="pair">
         <figure>
           <img src="images/lobby.webp" alt="로비 화면" loading="lazy">
@@ -252,23 +254,23 @@
   <section id="hook">
     <div class="sec-no">03</div>
     <h2>사로잡는 이유</h2>
-    <p class="keyline">계속 하게 만드는 이유는 세 가지입니다. 첫째, 만회는 되지만 미룰 수 없는 마감. 둘째, 가려진 다음 일차. 셋째, 평소 플레이를 목표로 바꾸는 미션.</p>
+    <p class="keyline">계속 하게 만드는 이유는 세 가지입니다. 첫째, 확정 보상이 걸린 누적 게이지. 둘째, 만회는 되지만 미룰 수 없는 마감. 셋째, 평소 플레이를 목표로 바꾸는 미션. 반면 가려진 다음 일차는 접속 이유가 되지 못했습니다.</p>
     <div class="card">
-      <h3>재미요소 1. 느슨한 일일 압박과 단단한 최종 마감</h3>
-      <p class="takeaway">놓친 날은 만회할 수 있지만 마감은 미룰 수 없어서, 완주하려는 동기가 생깁니다.</p>
+      <h3>재미요소 1. 확정 보상이 걸린 누적 게이지</h3>
+      <p class="takeaway">미션을 끝낼 때마다 확정 보상이 눈에 보이게 가까워져서, 계속 달성할 이유가 생깁니다.</p>
       <dl class="why">
-        <dt>설계</dt><dd>놓친 일차의 미션도 나중에 달성해 보상을 받을 수 있지만, 이벤트 기간은 정해져 있어 끝나면 사라집니다. 7일을 모두 완료하면 현재 최고 등급의 레전드 캐릭터를 줍니다.</dd>
-        <dt>효과</dt><dd>하루를 빠뜨려도 포기할 이유가 없어 이탈을 막는 안전장치가 되고, 동시에 마감 전에는 반드시 끝내야 한다는 압박과 최종 보상에 가까워질수록 더 하고 싶어지는 목표 근접 효과가 이어집니다.</dd>
-        <dt>근거</dt><dd>7일차까지 완료하면 레전드 캐릭터를 받을 수 있고 기한이 정해져 있어서, 미리 스테이지를 진행해 두어야겠다는 목표의식이 생겼습니다.</dd>
+        <dt>설계</dt><dd>미션을 달성하면 메달이 쌓여 상단 게이지가 차오르고, 90 단위로 구간 보상이 있으며, 1,080에 도달하면 레전드 영웅을 확정으로 획득합니다. 어떤 영웅인지는 랜덤입니다.</dd>
+        <dt>효과</dt><dd>현재 위치(캡처 시점 350 / 1,080)와 다음 보상이 항상 보여서 목표에 가까워질수록 더 하고 싶어지는 목표 근접 효과가 생기고, 확정 보상이라 들인 시간이 헛되지 않으리라는 확신을 줍니다.</dd>
+        <dt>근거</dt><dd>레전드 보상이 걸려 있어서 일일 미션을 놓치지 않으려는 목표의식이 생겼고, 3일차에는 가능한 모든 일일 퀘스트를 클리어했습니다.</dd>
       </dl>
     </div>
     <div class="card">
-      <h3>재미요소 2. 가려진 다음 일차</h3>
-      <p class="takeaway">다음 일차를 볼 수 없어서, 특정 미션이 아니라 전반적인 성장에 미리 대비하게 됩니다.</p>
+      <h3>재미요소 2. 느슨한 일일 압박과 단단한 최종 마감</h3>
+      <p class="takeaway">놓친 날은 만회할 수 있지만 마감은 미룰 수 없어서, 완주하려는 동기가 생깁니다.</p>
       <dl class="why">
-        <dt>설계</dt><dd>다음 일차의 미션과 보상은 열리기 전까지 볼 수 없고, 4~7일차 탭은 잠겨 있습니다.</dd>
-        <dt>효과</dt><dd>어떤 미션이 올지 알 수 없으니 특정 목표 하나가 아니라 전반적인 성장에 대비하게 됩니다.</dd>
-        <dt>근거</dt><dd>다음 날 보상을 미리 볼 수 없어서, 어떤 미션이 와도 클리어할 수 있도록 스테이지를 미리 밀어 두자는 행동으로 이어졌습니다.</dd>
+        <dt>설계</dt><dd>놓친 일차의 미션도 나중에 달성해 보상을 받을 수 있지만, 이벤트 기간은 정해져 있어 끝나면 사라집니다.</dd>
+        <dt>효과</dt><dd>하루를 빠뜨려도 포기할 이유가 없어 이탈을 막는 안전장치가 되고, 동시에 마감 전에는 반드시 끝내야 한다는 압박이 이어집니다.</dd>
+        <dt>근거</dt><dd>레전드 보상과 기한이 걸려 있어서, 미리 스테이지를 진행해 두어야겠다는 목표의식이 생겼습니다.</dd>
       </dl>
     </div>
     <div class="card">
@@ -277,23 +279,29 @@
       <dl class="why">
         <dt>설계</dt><dd>미션이 챕터 클리어, 몬스터 처치, 장비 장착과 강화, 재화 획득 같은 본편의 핵심 행동으로 구성되고, 요구량은 일차마다 커집니다. 몬스터 처치는 2,000마리에서 10,000마리로, 머니 획득은 3,000에서 40,000으로 늘어납니다.</dd>
         <dt>효과</dt><dd>이벤트가 별도 콘텐츠가 아니라 평소 플레이에 목표를 붙여 줍니다. 받은 재화는 장비 강화로 이어져 다음 미션을 달성하기 쉽게 만듭니다.</dd>
-        <dt>근거</dt><dd>머니를 써서 엘리트 갑옷을 +42에서 +43으로 강화하면 공격력이 84에서 86, 최대 HP가 420에서 430으로 오릅니다.</dd>
+        <dt>근거</dt><dd>머니를 써서 엘리트 갑옷을 +42에서 +43으로 강화하면 공격력이 84에서 86, 최대 HP가 420에서 430으로 오릅니다. 3일차 미션에 챕터 10 클리어가 있었고, 3일 동안 챕터 15까지 진행했습니다.</dd>
       </dl>
       <figure class="small">
         <img src="images/enhance.png" alt="장비 강화 화면" loading="lazy">
         <figcaption>장비 강화 화면: 재화(머니)가 성장으로 이어지는 지점</figcaption>
       </figure>
     </div>
+    <div class="card note-card">
+      <h3>참고. 접속 이유가 되지 못한 설계</h3>
+      <p class="takeaway">가려진 다음 일차는 재접속의 동기가 되지 못했습니다.</p>
+      <p>다음 일차의 미션과 보상은 열리기 전까지 볼 수 없고 4~7일차 탭은 잠겨 있습니다. 하지만 궁금해도 볼 수 없으니 앱을 켤 필요가 없었습니다. 재접속을 이끈 것은 궁금증이 아니라 누적 게이지와 마감이었습니다.</p>
+    </div>
   </section>
 
   <section id="experience">
     <div class="sec-no">04</div>
     <h2>경험 분석</h2>
-    <p class="keyline">일차가 오를수록 미션 요구량이 커졌고, 어떤 미션이 와도 클리어할 수 있도록 미리 스테이지를 진행해 두는 플레이로 이어졌습니다.</p>
+    <p class="keyline">챕터 진행은 1일차 4 부근, 2일차 11, 3일차 15까지 올랐고, 2일차와 3일차 모두 막히는 구간을 만났습니다.</p>
     <div class="days">
       <div class="day">
         <div class="d">DAY 1</div>
-        <h3>장비와 재화 중심</h3>
+        <h3>정신없는 첫날</h3>
+        <p style="font-size:14px; margin-bottom:10px">여러 신규 보상을 받느라 정신이 없었고, 메인 챕터는 4 정도까지밖에 밀지 못했습니다.</p>
         <ul>
           <li>강화 레벨 12 장비 장착</li>
           <li>몬스터 총 2,000마리 처치</li>
@@ -301,12 +309,12 @@
           <li>800 다이아 획득</li>
           <li>슈페리어 등급 이상 장비 장착</li>
         </ul>
-        <div class="todo">작성 예정: 1일차에 느낀 점</div>
         <figure><img src="images/event-day1.png" alt="초보 7일 이벤트 1일차 미션 화면" loading="lazy"></figure>
       </div>
       <div class="day">
         <div class="d">DAY 2</div>
-        <h3>요구량이 크게 오른 날</h3>
+        <h3>챕터 11에서 막힘</h3>
+        <p style="font-size:14px; margin-bottom:10px">2일차 보상을 받고 어느 정도 적응해서 메인 챕터를 쭉 밀었지만 챕터 11에서 막혔습니다. 인게임 채팅에서도 다른 유저가 챕터 11에서 막혔다고 말하는 것을 봤고, 이 지점이 첫 번째 임계점인 것 같습니다.</p>
         <ul>
           <li>강화 레벨 15 장비 장착</li>
           <li>몬스터 총 10,000마리 처치</li>
@@ -314,12 +322,12 @@
           <li>1,500 다이아 획득</li>
           <li>전신 장비 슈페리어 등급 달성</li>
         </ul>
-        <div class="todo">작성 예정: 2일차에 느낀 점</div>
         <figure><img src="images/event-day2.png" alt="초보 7일 이벤트 2일차 미션 화면" loading="lazy"></figure>
       </div>
       <div class="day">
         <div class="d">DAY 3</div>
-        <h3>친구 선물과 챕터 클리어가 더해진 날</h3>
+        <h3>챕터 15에서 다시 막힘</h3>
+        <p style="font-size:14px; margin-bottom:10px">완전히 적응해서 가능한 모든 일일 퀘스트를 클리어하고 메인 챕터를 최대한 밀어 챕터 15까지 도달했지만, 또 막혔습니다.</p>
         <ul>
           <li>전신 장비 탁월 등급 달성</li>
           <li>친구에게 누적 30회 선물하기</li>
@@ -327,13 +335,12 @@
           <li>챕터 10 클리어</li>
           <li>모험 13레벨</li>
         </ul>
-        <div class="todo">작성 예정: 3일차에 느낀 점</div>
         <figure><img src="images/event-day3.png" alt="초보 7일 이벤트 3일차 미션 화면" loading="lazy"></figure>
       </div>
     </div>
     <div class="card" style="margin-top:14px">
       <h3>플레이 시간</h3>
-      <p><strong>가장 길게 플레이한 날은 10월 2일로 3시간 19분입니다.</strong> 앱 사용 시간 통계(9월 27일~10월 3일) 기준 이번 주 합계는 6시간 50분입니다.</p>
+      <p><strong>가장 길게 플레이한 날은 10월 2일(2일차)로 3시간 19분입니다.</strong> 이날 메인 챕터를 4 부근에서 11까지 밀었습니다. 앱 사용 시간 통계(9월 27일~10월 3일) 기준 이번 주 합계는 6시간 50분입니다.</p>
       <div class="todo">작성 예정: 위 통계가 후더덕 서바이벌 사용 시간인지 확인, 나머지 날짜별 시간</div>
       <figure class="small">
         <img src="images/screen-time.png" alt="앱 사용 시간 통계" loading="lazy">
@@ -345,13 +352,13 @@
   <section id="proscons">
     <div class="sec-no">05</div>
     <h2>장단점 분석</h2>
-    <p class="keyline">장점은 부담 없는 만회와 분명한 최종 보상이고, 단점은 초반 보상량이 적게 느껴진다는 점입니다.</p>
+    <p class="keyline">장점은 부담 없는 만회와 분명한 최종 보상이고, 단점은 초반 보상량, 광고와 결제 유도, 사라지지 않는 알림 점이 만드는 피로감입니다.</p>
     <div class="grid-2">
       <div class="card pro">
         <h3>장점</h3>
         <ul class="plain">
           <li><strong>부담 없는 만회.</strong> 놓친 일차도 나중에 달성해 보상을 받을 수 있어, 하루 접속하지 못해도 부담이 크지 않습니다.</li>
-          <li><strong>분명한 최종 보상.</strong> 7일 완주 보상(레전드 캐릭터)이 분명해서 목표가 뚜렷합니다.</li>
+          <li><strong>분명한 최종 보상.</strong> 누적 메달 1,080을 채우면 레전드 영웅을 확정으로 받아 목표가 뚜렷합니다.</li>
         </ul>
         <div class="todo">작성 예정: 그 밖의 장점</div>
       </div>
@@ -359,8 +366,38 @@
         <h3>단점</h3>
         <ul class="plain">
           <li><strong>초반 보상량이 적게 느껴짐.</strong> 1~3일차에 받는 재화의 양이 적었습니다. 미션 보상 머니는 1K인데, 화면의 장비 강화 1회에는 5K가 필요합니다.</li>
+          <li><strong>접속 직후부터 쌓이는 피로감.</strong> 소액 보상을 받는 곳이 여러 화면에 흩어져 있고, 받을 때까지 빨간 알림 점이 사라지지 않아 게임을 켜자마자 확인할 곳이 생깁니다.</li>
+          <li><strong>광고 제거 압박.</strong> 광고를 요구하는 이벤트가 많아 번거로웠고, 광고 제거가 여러 화면에 들어 있어 월간카드(7,500원)를 살까 하는 압박을 느꼈습니다.</li>
         </ul>
-        <div class="todo">작성 예정: 그 밖에 직접 겪은 단점 (피로, 과금 압박, 불편한 UX 등)</div>
+      </div>
+    </div>
+    <div class="card" style="margin-top:14px">
+      <h3>단점의 근거 화면</h3>
+      <p class="takeaway">광고 시청과 월간카드 구매를 권하는 장면이 여러 화면에 들어 있습니다.</p>
+      <div class="shots">
+        <figure>
+          <img src="images/patrol-ad.png" alt="빠른 순찰 팝업" loading="lazy">
+          <figcaption>빠른 순찰: 광고를 보고 120분 수익을 받음 (오늘 남은 횟수 1)</figcaption>
+        </figure>
+        <figure>
+          <img src="images/monthly-card.webp" alt="특권 월간카드 화면" loading="lazy">
+          <figcaption>특권 월간카드: 광고 제거 월간카드 7,500원, 특급 월간카드 13,000원. 광고 제거 혜택에 무제한 빠른 순찰이 포함됨</figcaption>
+        </figure>
+        <figure>
+          <img src="images/ad-treasure.webp" alt="관람 비밀 보물 화면" loading="lazy">
+          <figcaption>관람 비밀 보물: 광고 시청형 이벤트, 누적 횟수에 따라 3·7·12·18회 구간 보상</figcaption>
+        </figure>
+      </div>
+      <p class="takeaway" style="margin-top:24px">소액 보상을 받는 곳이 흩어져 있고, 받을 때까지 알림 점이 남습니다.</p>
+      <div class="shots">
+        <figure>
+          <img src="images/play-schedule.png" alt="플레이 일정 화면" loading="lazy">
+          <figcaption>플레이 일정: 우측 상단에 일일 보물상자 아이콘이 있음</figcaption>
+        </figure>
+        <figure>
+          <img src="images/starter-help.webp" alt="출항 도움 화면" loading="lazy">
+          <figcaption>출항 도움: 3,000원 7일 출석 보상 화면, 우측 상단에서 머니를 받을 수 있음</figcaption>
+        </figure>
       </div>
     </div>
   </section>
@@ -368,15 +405,20 @@
   <section id="improve">
     <div class="sec-no">06</div>
     <h2>단점에 대한 개선점</h2>
-    <div class="todo" style="margin-bottom:20px">작성 예정: 개선안의 핵심 한 줄 (단점마다 대응하는 개선안을 아래 표에 하나씩)</div>
+    <p class="keyline">흩어진 소액 보상은 클릭해서 들어가 받게 하지 말고, 접속 시 팝업으로 한 번에 보여 주는 편이 낫습니다.</p>
     <div class="card" style="padding:0; overflow:hidden">
       <table>
-        <thead><tr><th style="width:34%">단점</th><th>개선안</th><th style="width:26%">기대 효과</th></tr></thead>
+        <thead><tr><th style="width:34%">단점</th><th>개선안</th><th style="width:30%">기대 효과</th></tr></thead>
         <tbody>
-          <tr><td><span class="todo" style="display:inline-block">작성 예정</span></td><td></td><td></td></tr>
+          <tr>
+            <td>소액 보상이 여러 화면에 흩어져 있고, 받을 때까지 알림 점이 사라지지 않아 접속 직후부터 피로감을 줌</td>
+            <td>보상 화면에 일일이 들어가 받게 하는 대신, 접속 시 팝업으로 한 번에 띄워 수령하게 함</td>
+            <td>확인해야 할 알림 점이 줄어 접속 초반의 피로감이 줄고, 과금 상품을 보여 주려는 회사의 목적은 팝업으로도 유지됨</td>
+          </tr>
         </tbody>
       </table>
     </div>
+    <p class="flow-note">이 구조는 회사 입장에서는 과금 상품이 있다는 것을 보여 주기 위한 유도 장치로 보이지만, 유저가 직접 눌러 들어가게 하기보다 팝업으로 띄우는 쪽이 더 편합니다.</p>
   </section>
 
   <footer>

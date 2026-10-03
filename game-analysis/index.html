@@ -81,6 +81,13 @@
   }
   .todo + .todo { margin-top: 8px; }
 
+  .card p { font-size: 15px; }
+  .facts { list-style: none; }
+  .facts li { padding: 10px 0; border-bottom: 1px solid #EDF0F4; font-size: 15px; }
+  .facts li:last-of-type { border-bottom: none; }
+  .facts b { display: inline-block; min-width: 84px; color: var(--accent); font-weight: 700; }
+  .facts + .todo { margin-top: 12px; }
+
   /* 이미지 자리 */
   .shot {
     border: 1px dashed var(--rule); border-radius: 6px;
@@ -133,10 +140,9 @@
 
   <header>
     <div class="eyebrow">게임 분석 과제 · 재미요소 분석</div>
-    <h1>후더덕 서바이벌, <span id="sys-title">[분석할 시스템]</span>은 어떻게 플레이어를 붙잡는가</h1>
+    <h1>후더덕 서바이벌, <span id="sys-title">초보 7일 이벤트</span>는 어떻게 플레이어를 붙잡는가</h1>
     <p class="lead">모바일 스토어에서 급상승한 뱀서라이크 후더덕 서바이벌을 3일간 직접 플레이하고, 사용자를 사로잡는 시스템 하나를 골라 분석했습니다.</p>
-    <p class="meta">이진혁 · [과목명] · 플레이 기간 3일 · 플랫폼 Google Play</p>
-    <div class="todo" style="margin-top:16px">작성 예정: 분석할 시스템 이름을 정하면 제목의 [분석할 시스템]을 바꿉니다.</div>
+    <p class="meta">이진혁 · 포트폴리오 · 플레이 기간 3일 · 플랫폼 Google Play</p>
   </header>
 
   <section id="target">
@@ -145,12 +151,14 @@
     <p class="sec-desc">어떤 게임의 어떤 시스템을 왜 골랐는지 밝힙니다.</p>
     <div class="card">
       <h3>게임과 시스템</h3>
-      <div class="todo">작성 예정: 게임 소개(장르, 플랫폼, 과금 방식)를 두세 문장으로 씁니다.</div>
-      <div class="todo">작성 예정: 분석할 시스템 한 줄 정의</div>
+      <p>후더덕 서바이벌은 모바일 스토어에서 최근 순위가 급상승한 뱀서라이크 장르의 게임입니다.</p>
+      <div class="todo">작성 예정: 과금 방식(광고, 결제)과 게임 소개 한두 문장</div>
+      <p style="margin-top:12px"><strong>분석할 시스템: 초보 7일 이벤트.</strong> 매일 0시에 1~7일차 일일 미션이 하루에 하나씩 열리고, 달성하면 인게임 재화를 보상으로 받아 캐릭터를 성장시킬 수 있는 신규 유저용 이벤트입니다.</p>
     </div>
     <div class="card">
       <h3>선정 이유</h3>
-      <div class="todo">작성 예정: 3일 동안 앱을 다시 켜게 만든 요소가 무엇이었는지, 그래서 이 시스템을 골랐다는 흐름으로 씁니다.</div>
+      <p>3일간 플레이하면서 매일 앱을 다시 켜게 만든 가장 큰 이유는 전투 자체가 아니라 초보 7일 이벤트의 보상이었습니다. 그래서 이 이벤트를 분석 대상으로 골랐습니다.</p>
+      <div class="todo">작성 예정: 보상이 접속 이유가 된 구체적인 장면 (예: 어느 날 어떤 보상 때문에 접속했는지)</div>
     </div>
   </section>
 
@@ -164,7 +172,13 @@
     </div>
     <div class="card">
       <h3>구성 요소</h3>
-      <div class="todo">작성 예정: 시스템을 이루는 요소(규칙, 보상, 제한, 연결된 다른 시스템)를 표나 목록으로 정리합니다.</div>
+      <ul class="facts">
+        <li><b>리셋 시간</b> 매일 0시</li>
+        <li><b>주기</b> 24시간마다 다음 일차의 일일 미션이 열림 (1일차~7일차)</li>
+        <li><b>달성 조건</b> 일일 미션 달성</li>
+        <li><b>보상</b> 다양한 인게임 재화, 받은 재화로 캐릭터 성장</li>
+      </ul>
+      <div class="todo">작성 예정: 일차별 미션 종류, 보상 종류와 양, 놓친 일차의 처리 방식, 7일 완료 보상</div>
     </div>
   </section>
 

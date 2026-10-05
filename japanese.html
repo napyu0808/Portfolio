@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>이진혁 | 일본어 포트폴리오</title>
+  <meta name="description" content="JLPT N1 162점, 9년간 매일 사용한 일본어. 실시간 동시통역과 게임 로컬라이제이션 번역 샘플." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --accent: #978FF9;
+      --accent-dim: rgba(151, 143, 249, 0.12);
+      --accent-border: rgba(151, 143, 249, 0.28);
+      --bg: #0d0d0d;
+      --surface: #161616;
+      --surface2: #1f1f1f;
+      --border: #2a2a2a;
+      --text: #e2e2e2;
+      --text-sub: #888;
+      --radius: 14px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html {
+      font-size: 18px;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Noto Sans KR', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.75;
+      word-break: keep-all;
+      overflow-wrap: break-word;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    p, li, dd { text-wrap: pretty; }
+    h1, h2, h3, .lead { text-wrap: balance; }
+
+    /* 일본어 본문 */
+    .ja {
+      font-family: 'Noto Sans JP', 'Yu Gothic', 'Meiryo', sans-serif;
+      word-break: normal;
+      line-break: strict;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      padding: 92px 24px 72px;
+      text-align: center;
+      border-bottom: 1px solid var(--border);
+      background:
+        radial-gradient(900px 340px at 50% -8%, var(--accent-dim), transparent 70%),
+        var(--bg);
+    }
+
+    .hero .eyebrow {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--text-sub);
+      letter-spacing: 0.04em;
+    }
+
+    .hero h1 {
+      font-size: clamp(2rem, 6vw, 3.1rem);
+      font-weight: 800;
+      line-height: 1.25;
+      margin: 10px 0 18px;
+    }
+
+    .hero h1 em {
+      font-style: normal;
+      color: var(--accent);
+    }
+
+    .hero .lead {
+      font-size: 1.1rem;
+      color: var(--text-sub);
+      max-width: 640px;
+      margin: 0 auto;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: rgba(13, 13, 13, 0.92);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    nav .inner {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 20px;
+      display: flex;
+      gap: 22px;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+
+    nav .inner::-webkit-scrollbar { display: none; }
+
+    nav a {
+      flex: none;
+      padding: 15px 0;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--text-sub);
+      border-bottom: 2px solid transparent;
+    }
+
+    nav a:hover { color: var(--accent); }
+
+    /* ── MAIN ── */
+    main {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 56px 20px 100px;
+      display: flex;
+      flex-direction: column;
+      gap: 56px;
+    }
+
+    section { scroll-margin-top: 70px; }
+
+    .section-title {
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: var(--accent);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .section-title::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .section-desc {
+      font-size: 1rem;
+      color: var(--text-sub);
+      margin-bottom: 24px;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px 32px;
+    }
+
+    .card + .card { margin-top: 16px; }
+
+    .card h3 {
+      font-size: 1.25rem;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+
+    .card p + p { margin-top: 14px; }
+
+    /* ── 요약 숫자 ── */
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+    }
+
+    .stat {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-top: 3px solid var(--accent);
+      border-radius: var(--radius);
+      padding: 22px 20px;
+      text-align: center;
+    }
+
+    .stat .num {
+      font-size: 1.9rem;
+      font-weight: 800;
+      color: var(--accent);
+      line-height: 1.2;
+    }
+
+    .stat .label {
+      font-size: 0.9rem;
+      color: var(--text-sub);
+      margin-top: 6px;
+    }
+
+    /* ── 목록 ── */
+    .facts { list-style: none; }
+
+    .facts li {
+      display: grid;
+      grid-template-columns: 150px minmax(0, 1fr);
+      gap: 16px;
+      padding: 13px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 1rem;
+    }
+
+    .facts li:last-child { border-bottom: none; }
+    .facts b { color: var(--accent); font-weight: 700; }
+
+    ul.plain { padding-left: 20px; font-size: 1rem; }
+    ul.plain li + li { margin-top: 8px; }
+
+    /* ── 번역 샘플 ── */
+    .trans {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+
+    .trans-col {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px 22px;
+    }
+
+    .trans-col .tag {
+      display: inline-block;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--accent);
+      background: var(--accent-dim);
+      border: 1px solid var(--accent-border);
+      border-radius: 999px;
+      padding: 3px 12px;
+      margin-bottom: 14px;
+    }
+
+    .trans-col ol {
+      padding-left: 20px;
+      font-size: 0.95rem;
+      line-height: 1.85;
+    }
+
+    .trans-col ol li + li { margin-top: 10px; }
+
+    .script { font-size: 0.95rem; line-height: 1.9; }
+    .script p + p { margin-top: 12px; }
+    .script .who { color: var(--accent); font-weight: 700; }
+    .script .inner-voice { color: var(--text-sub); }
+
+    .why {
+      background: var(--surface2);
+      border-left: 3px solid var(--accent);
+      border-radius: 0 10px 10px 0;
+      padding: 20px 24px;
+    }
+
+    .why h4 {
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: var(--accent);
+      margin-bottom: 10px;
+    }
+
+    .why ul { padding-left: 20px; font-size: 0.97rem; }
+    .why ul li + li { margin-top: 9px; }
+
+    .meta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .meta-tag {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      padding: 5px 13px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text-sub);
+    }
+
+    /* ── 연락처 ── */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .contact-item {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px 24px;
+    }
+
+    .contact-item .k {
+      font-size: 0.88rem;
+      color: var(--text-sub);
+      margin-bottom: 4px;
+    }
+
+    .contact-item .v { font-weight: 700; }
+    .contact-item a:hover { color: var(--accent); }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 28px 20px 48px;
+      text-align: center;
+      font-size: 0.9rem;
+      color: var(--text-sub);
+    }
+
+    footer a { color: var(--accent); font-weight: 700; }
+
+    @media (max-width: 760px) {
+      html { font-size: 16px; }
+      .hero { padding: 64px 20px 52px; }
+      .stats { grid-template-columns: repeat(2, 1fr); }
+      .trans { grid-template-columns: 1fr; }
+      .facts li { grid-template-columns: 1fr; gap: 2px; }
+      .contact-grid { grid-template-columns: 1fr; }
+      .card { padding: 24px 20px; }
+      main { padding: 40px 16px 72px; gap: 44px; }
+      nav .inner { padding: 0 16px; gap: 18px; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="eyebrow">이진혁 · 일본어 포트폴리오</div>
+  <h1>9년을 매일 쓴 <em>일본어</em></h1>
+  <p class="lead">시험을 위해 공부한 적은 없습니다. 고등학교 1학년 때 일본인 친구를 사귀면서 쓰기 시작해 지금까지 매일 쓰고 있습니다.</p>
+</header>
+
+<nav>
+  <div class="inner">
+    <a href="#summary">요약</a>
+    <a href="#language">어학</a>
+    <a href="#daily">사용 방식</a>
+    <a href="#interpret">동시통역</a>
+    <a href="#sample1">번역 샘플 1</a>
+    <a href="#sample2">번역 샘플 2</a>
+    <a href="#record">기록과 협업</a>
+    <a href="#contact">연락처</a>
+  </div>
+</nav>
+
+<main>
+
+  <!-- ── 요약 ── -->
+  <section id="summary">
+    <div class="section-title">요약</div>
+    <div class="stats">
+      <div class="stat">
+        <div class="num">9년</div>
+        <div class="label">매일 사용</div>
+      </div>
+      <div class="stat">
+        <div class="num">N1 162</div>
+        <div class="label">JLPT 최상위 등급</div>
+      </div>
+      <div class="stat">
+        <div class="num">60 / 60</div>
+        <div class="label">독해 · 청해 만점</div>
+      </div>
+      <div class="stat">
+        <div class="num">2,000명</div>
+        <div class="label">실시간 동시통역</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 어학 ── -->
+  <section id="language">
+    <div class="section-title">어학 역량</div>
+    <p class="section-desc">점수 분포가 학습 방식을 보여줍니다.</p>
+    <div class="card">
+      <ul class="facts">
+        <li><b>JLPT N1</b>162점 / 180점 — 언어지식(문자·어휘·문법) 42, 독해 60(만점), 청해 60(만점)</li>
+        <li><b>JLPT N2</b>168점</li>
+        <li><b>수상</b>유한대학교 일본어 어학스피치 대회 장려상</li>
+        <li><b>현지 경험</b>일본 3회 방문 · 현지 친구들과 교류 및 문화 체험</li>
+      </ul>
+      <p style="margin-top:20px">독해와 청해가 만점이고 문자·어휘·문법이 42점입니다. 문제집으로 외운 사람의 분포가 아니라, 읽고 들으며 익힌 사람의 분포입니다.</p>
+    </div>
+  </section>
+
+  <!-- ── 사용 방식 ── -->
+  <section id="daily">
+    <div class="section-title">일본어를 쓰는 방식</div>
+    <p class="section-desc">공부 대상이 아니라 매일 쓰는 도구입니다.</p>
+    <div class="card">
+      <ul class="plain">
+        <li><b>말하기 · 듣기</b> — 일본인 친구와 음성 통화. 고등학교 1학년 때 시작해 9년째 이어지고 있습니다.</li>
+        <li><b>읽기 · 쓰기</b> — 같은 친구들과 메시지로 대화. 구어체와 문어체를 함께 씁니다.</li>
+        <li><b>일상 입력</b> — SNS와 유튜브를 일본어로 봅니다. 실시간 방송은 자막 없이 보며 채팅으로 소통합니다.</li>
+        <li><b>정보 수집</b> — 필요한 정보가 있으면 한국어 검색에서 멈추지 않고 일본 사이트와 커뮤니티까지 찾아 양쪽을 비교합니다. 원문에 바로 접근할 수 있으면 번역된 정보만 보는 것보다 빠르고 정확합니다.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ── 동시통역 ── -->
+  <section id="interpret">
+    <div class="section-title">실시간 동시통역</div>
+    <p class="section-desc">되돌릴 시간이 없는 환경에서 검증한 일본어.</p>
+    <div class="card">
+      <h3>이터널리턴 공식 방송 — 일본 커뮤니티 실시간 동시통역</h3>
+      <div class="meta-row">
+        <span class="meta-tag">약 2,000명 대상</span>
+        <span class="meta-tag">한국어 → 일본어</span>
+        <span class="meta-tag">실시간 중계</span>
+      </div>
+      <p>공식 방송을 일본 커뮤니티에 실시간으로 전달했습니다. 중계 속도를 따라가면서 게임 용어와 화자의 감정까지 함께 옮겨야 했고, 사전에 없는 표현을 현지 이용자가 실제로 쓰는 말로 바꾸는 판단을 계속 내렸습니다.</p>
+      <p>한 문장을 완벽하게 다듬는 것보다 보는 사람이 지금 상황을 놓치지 않게 하는 것이 먼저였습니다. 여기서 두 가지를 얻었습니다. 직역 대신 현지 커뮤니티에서 통용되는 표현을 고르는 판단, 그리고 모르는 표현이 나와도 멈추지 않고 맥락으로 메우는 대응입니다.</p>
+    </div>
+  </section>
+
+  <!-- ── 번역 샘플 1 ── -->
+  <section id="sample1">
+    <div class="section-title">번역 샘플 1 — 업데이트 노트</div>
+    <p class="section-desc">게임 패치 노트의 버그 수정 항목. 한국어 → 일본어.</p>
+    <div class="card">
+      <div class="trans">
+        <div class="trans-col">
+          <span class="tag">원문 (한국어)</span>
+          <p style="font-weight:700; margin-bottom:12px">[ 버그 수정 사항 ]</p>
+          <ol>
+            <li>팬텀리그 공연장 인게임 배경에서 퍼스트 임팩트 발동 시 배경의 철제 구조물이 노출되는 문제가 수정됩니다.</li>
+            <li>선수 관리 화면에서 가이드 상세 화면으로 이동할 때 게임이 비정상적으로 종료되는 문제가 수정됩니다.</li>
+            <li>프리셋 관리 화면에서 즐겨찾기 선수가 없는 상태로 즐겨찾기 버튼을 선택할 때 게임이 비정상적으로 종료되는 문제가 수정됩니다.</li>
+            <li>'이지훈'이 토스를 올릴 때 간헐적으로 게임이 비정상적으로 종료되는 문제가 수정됩니다.</li>
+          </ol>
+        </div>
+        <div class="trans-col ja">
+          <span class="tag">번역문 (日本語)</span>
+          <p style="font-weight:700; margin-bottom:12px">【 バグ修正事項 】</p>
+          <ol>
+            <li>ファントムリーグ公演場ゲーム内背景で、ファーストインパクト発動時に背景の鉄骨が露出される不具合が修正されます。</li>
+            <li>選手管理画面からガイド詳細画面に移動する際、ゲームが異常終了する不具合が修正されます。</li>
+            <li>フリーセット管理画面でお気に入り選手がいない状態でお気に入りボタンを選択すると、ゲームが非正常的終了する不具合が修正されます。</li>
+            <li>「天宮一輝」がトスを上げる際に、まれにゲームがクラッシュする不具合が修正されます。</li>
+          </ol>
+        </div>
+      </div>
+      <div class="why">
+        <h4>번역 의도 및 표현 선택 이유</h4>
+        <ul>
+          <li>일본 패치 노트에서는 '문제'를 <span class="ja">不具合</span>로 적는 것이 일반적이라 그대로 옮겼습니다.</li>
+          <li>'게임이 비정상적으로 종료된다'는 회사 방침에 따라 표기가 달라지는 문구라 일부러 통일하지 않고 <span class="ja">異常終了 / 非正常的終了 / クラッシュ</span> 세 가지로 나눠 적었습니다. 실무에서는 게임사의 용어집을 기준으로 하나로 통일하는 것이 원칙이라는 점을 확인했습니다.</li>
+          <li>캐릭터 이름은 먼저 번역한 뒤 공식 표기를 조사했습니다. '이지훈'의 일본판 정식 명칭이 <span class="ja">「天宮一輝」</span>임을 확인하고 반영했습니다. 고유명사는 추측하지 않고 공식 자료를 확인해야 한다는 점을 여기서 배웠습니다.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 번역 샘플 2 ── -->
+  <section id="sample2">
+    <div class="section-title">번역 샘플 2 — 스토리 대화</div>
+    <p class="section-desc">캐릭터 대사. 번역 후 공식 번역과 대조해 검증했습니다.</p>
+    <div class="card">
+      <div class="trans">
+        <div class="trans-col">
+          <span class="tag">원문 (한국어)</span>
+          <div class="script">
+            <p><span class="who">남재현</span><br>나는... 나는 꼭 저런 선수가 되고 싶어. 아니, 반드시 될 거야.</p>
+            <p>...응. 하하, 너라면 분명 그렇게 될 수 있을 거야.</p>
+            <p>...백시우, 너도 그럼 다시... 아냐, 됐다.</p>
+            <p>자, 이왕 보는 거 처음부터 다시 보자! 내가 제일 좋아하는 장면 보여줄게.</p>
+            <p><span class="who">백시우</span><br>.....</p>
+            <p class="inner-voice">(어떤 순간에도 결코 꺾이지 않는 사람.)</p>
+            <p class="inner-voice">(...나도.)</p>
+            <p class="inner-voice">(...나도 꼭 그렇게 되고 싶어.)</p>
+          </div>
+        </div>
+        <div class="trans-col">
+          <span class="tag">번역문 (日本語)</span>
+          <div class="script ja">
+            <p><span class="who">ナム・ジェヒョン</span><br>僕は…僕はぜひあのような選手になりたい。いや、絶対になる。</p>
+            <p>…うん。ははっ、君ならきっとそうなれるさ。</p>
+            <p>…ペク・シウ、じゃあ君もまた…いや、いい。</p>
+            <p>さって、せっかく見るの最初から見直そう！僕が一番好きな場面見せてあげる。</p>
+            <p><span class="who">ペク・シウ</span><br>…..</p>
+            <p class="inner-voice">（どんな瞬間でも決して折れない人。）</p>
+            <p class="inner-voice">（…僕も。）</p>
+            <p class="inner-voice">（…僕も必ずそうなりたい。）</p>
+          </div>
+        </div>
+      </div>
+      <div class="why">
+        <h4>공식 번역과 대조한 결과</h4>
+        <ul>
+          <li><b>1인칭</b> — 어린 시절 장면이라 <span class="ja">僕</span>를 택했으나, 공식은 <span class="ja">俺</span>를 씁니다. 캐릭터의 열정적인 성격을 감안하면 <span class="ja">俺</span>가 더 자연스러운 선택임을 확인했습니다.</li>
+          <li><b>"반드시 될 거야"</b> — <span class="ja">絶対になる</span>로 옮겼으나, 공식은 <span class="ja">必ずなってみせる</span>로 의지를 더 강하게 표현했습니다.</li>
+          <li><b>"꺾이지 않는"</b> — <span class="ja">折れない</span>만으로는 부족했고, 공식은 <span class="ja">心の折れない</span>로 감정적 뉘앙스를 살렸습니다.</li>
+          <li>세 건 모두 문법이 아니라 <b>캐릭터 해석</b>에서 갈린 차이였습니다. 번역 전에 캐릭터 설정 자료와 용어집을 확인하는 것이 필수라는 점을 이 대조 과정에서 배웠습니다.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 기록과 협업 ── -->
+  <section id="record">
+    <div class="section-title">기록과 협업</div>
+    <p class="section-desc">번역 품질은 기준을 남겨야 유지됩니다.</p>
+    <div class="card">
+      <h3>로그타워 — 3인 팀 15주 프로젝트 (팀장)</h3>
+      <div class="meta-row">
+        <span class="meta-tag">팀장 · 일정 관리 · 기획</span>
+        <span class="meta-tag">버그 12건 발견 · 문서화</span>
+        <span class="meta-tag">최종 A+</span>
+      </div>
+      <p>테스트를 맡아 버그 12건을 발견했고, 재현 조건과 기대 결과, 실제 결과를 구분해 기록했습니다. 덕분에 팀원이 제 설명 없이도 같은 문제를 그대로 재현할 수 있었습니다.</p>
+      <p>의견이 갈릴 때는 누구 말이 맞는지 따지는 대신 각자의 근거를 먼저 듣고, 남은 일정 안에 끝낼 수 있는 쪽으로 기준을 정했습니다. 제 안을 접고 팀원의 방식을 택한 적도 있습니다.</p>
+      <p>같은 방식을 번역 용어 통일과 응대 이력 정리에 적용하려 합니다. 표현이 담당자마다 달라지지 않도록 기준을 남기는 일이 품질을 유지하는 가장 확실한 방법입니다.</p>
+    </div>
+  </section>
+
+  <!-- ── 연락처 ── -->
+  <section id="contact">
+    <div class="section-title">연락처</div>
+    <div class="contact-grid">
+      <div class="contact-item">
+        <div class="k">이메일</div>
+        <div class="v"><a href="mailto:napyu0808@naver.com">napyu0808@naver.com</a></div>
+      </div>
+      <div class="contact-item">
+        <div class="k">학력</div>
+        <div class="v">유한대학교 게임콘텐츠학과 · 졸업 예정 2026. 12</div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  번역 샘플은 학습 목적으로 직접 작업한 것이며, 공식 번역과 대조해 검증한 결과를 함께 적었습니다.<br>
+  <a href="index.html">← 전체 포트폴리오 보기</a>
+</footer>
+
+</body>
+</html>

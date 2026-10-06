@@ -122,6 +122,27 @@
   .g-tier { font-size: 11.5px; font-weight: 600; color: var(--accent); white-space: nowrap; }
   .g-hours { font-size: 13.5px; color: var(--muted); white-space: nowrap; min-width: 64px; text-align: right; }
 
+  /* 플랫폼 지표 */
+  .pf-row {
+    display: flex; flex-wrap: wrap; gap: 10px;
+    margin-top: 16px;
+  }
+  .pf-chip {
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    border-radius: 999px;
+    padding: 7px 18px;
+    font-size: 14.5px;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+  .pf-chip b {
+    color: var(--accent);
+    font-weight: 700;
+    font-size: 16px;
+    margin-left: 4px;
+  }
+
   footer {
     margin-top: 64px; padding-top: 24px;
     border-top: 1px solid var(--rule);
@@ -158,6 +179,7 @@
     <div class="name">이진혁 · 게임 QA 지원</div>
     <h1>게임 플레이 이력</h1>
     <p id="summary"></p>
+    <div class="pf-row" id="platforms"></div>
   </header>
 
   <section>
@@ -202,143 +224,143 @@
   // 전체 게임 목록 (hours: 숫자 플레이타임, record: 시간 대신 표기할 기록)
   const GAMES = [
     // RPG / 스토리
-    { name: '림버스 컴퍼니', genre: 'rpg', hours: 2000, note: '오픈 첫날부터',
+    { name: '림버스 컴퍼니', pf: 'pc', genre: 'rpg', hours: 2000, note: '오픈 첫날부터',
       featured: '오픈 초기부터 편의성 개편과 방향성이 잡혀가는 과정을 지켜보며 라이브 서비스의 흐름을 경험' },
-    { name: '페르소나 5 더 로열', genre: 'rpg', hours: 131,
+    { name: '페르소나 5 더 로열', pf: 'pc', genre: 'rpg', hours: 131,
       featured: '전작의 시스템을 기반으로 차별화 요소를 더하고, 놓치기 쉬운 서브 스토리로 다회차 플레이를 유도하는 설계가 인상적' },
-    { name: '페르소나 3 리로드', genre: 'rpg', hours: 112 },
-    { name: 'Library Of Ruina', genre: 'rpg', hours: 70.4 },
-    { name: '마법소녀의 마녀재판', genre: 'rpg', hours: 25.8 },
+    { name: '페르소나 3 리로드', pf: 'pc', genre: 'rpg', hours: 112 },
+    { name: 'Library Of Ruina', pf: 'pc', genre: 'rpg', hours: 70.4 },
+    { name: '마법소녀의 마녀재판', pf: 'pc', genre: 'rpg', hours: 25.8 },
 
     // 슈터
-    { name: 'RAINBOW 6 SIEGE', genre: 'shooter', hours: 1037.9, tier: '플래티넘',
+    { name: 'RAINBOW 6 SIEGE', pf: 'pc', genre: 'shooter', hours: 1037.9, tier: '플래티넘',
       featured: '방대한 맵과 전략 요소로 인해 신규·복귀 유저의 진입장벽이 높다는 점을 확인' },
-    { name: 'Warframe', genre: 'shooter', hours: 684.5 },
-    { name: 'PUBG', genre: 'shooter', hours: 266.2 },
-    { name: '스플래툰 3', genre: 'shooter', hours: 150 },
-    { name: 'Back 4 Blood', genre: 'shooter', hours: 13.6 },
-    { name: 'Void Diver', genre: 'shooter', hours: 4.3, note: '익스트랙션' },
+    { name: 'Warframe', pf: 'pc', genre: 'shooter', hours: 684.5 },
+    { name: 'PUBG', pf: 'pc', genre: 'shooter', hours: 266.2 },
+    { name: '스플래툰 3', pf: 'console', genre: 'shooter', hours: 150 },
+    { name: 'Back 4 Blood', pf: 'pc', genre: 'shooter', hours: 13.6 },
+    { name: 'Void Diver', pf: 'pc', genre: 'shooter', hours: 4.3, note: '익스트랙션' },
 
     // MOBA / 배틀로얄
-    { name: '리그 오브 레전드', genre: 'moba', record: '10년 이상', tier: '에메랄드',
+    { name: '리그 오브 레전드', pf: 'pc', genre: 'moba', record: '10년 이상', tier: '에메랄드',
       featured: '173명의 챔피언과 아이템이 얽힌 구조 속에서 밸런스 조정의 어려움을 체감' },
-    { name: '이터널리턴', genre: 'moba', record: '베타부터', tier: '데미갓',
+    { name: '이터널리턴', pf: 'pc', genre: 'moba', record: '베타부터', tier: '데미갓',
       featured: '시즌마다 추가되는 새로운 요소가 다양성을 높이는 동시에 유저의 학습 부담도 늘린다는 점을 실감' },
-    { name: '히어로즈 오브 더 스톰', genre: 'moba' },
+    { name: '히어로즈 오브 더 스톰', pf: 'pc', genre: 'moba' },
 
     // 덱빌딩 / 카드
-    { name: 'Shadowverse', genre: 'card', hours: 175.6 },
-    { name: 'Shadowverse: World Beyond', genre: 'card', hours: 174, tier: '마스터' },
-    { name: 'Slay the Spire', genre: 'card', hours: 121.7 },
-    { name: 'Yu-Gi-Oh! Master Duel', genre: 'card', hours: 28.7 },
-    { name: 'Inscryption', genre: 'card', hours: 10.4 },
-    { name: 'Hell Deck', genre: 'card', hours: 9.2 },
+    { name: 'Shadowverse', pf: 'pc', genre: 'card', hours: 175.6 },
+    { name: 'Shadowverse: World Beyond', pf: 'pc', genre: 'card', hours: 174, tier: '마스터' },
+    { name: 'Slay the Spire', pf: 'pc', genre: 'card', hours: 121.7 },
+    { name: 'Yu-Gi-Oh! Master Duel', pf: 'pc', genre: 'card', hours: 28.7 },
+    { name: 'Inscryption', pf: 'pc', genre: 'card', hours: 10.4 },
+    { name: 'Hell Deck', pf: 'pc', genre: 'card', hours: 9.2 },
 
     // 로그라이트 액션
-    { name: 'The Binding of Isaac', genre: 'rogue', hours: 119.2,
+    { name: 'The Binding of Isaac', pf: 'pc', genre: 'rogue', hours: 119.2,
       featured: '장기간 업데이트로 아이템을 꾸준히 추가하며 수명을 늘리는 로그라이트의 콘텐츠 확장 구조를 이해' },
-    { name: 'Dungreed', genre: 'rogue', hours: 73.8 },
-    { name: 'Heroes of Hammerwatch', genre: 'rogue', hours: 56.3 },
-    { name: 'Vampire Survivors', genre: 'rogue', hours: 51.2 },
-    { name: '세피리아', genre: 'rogue', hours: 48.6 },
-    { name: 'Enter the Gungeon', genre: 'rogue', hours: 29.4 },
-    { name: 'Risk of Rain 2', genre: 'rogue', hours: 23.4 },
-    { name: 'Lost Castle', genre: 'rogue', hours: 17.7 },
-    { name: 'Risk of Rain', genre: 'rogue', hours: 15.5 },
-    { name: 'Gunfire Reborn', genre: 'rogue', hours: 12.9 },
+    { name: 'Dungreed', pf: 'pc', genre: 'rogue', hours: 73.8 },
+    { name: 'Heroes of Hammerwatch', pf: 'pc', genre: 'rogue', hours: 56.3 },
+    { name: 'Vampire Survivors', pf: 'pc', genre: 'rogue', hours: 51.2 },
+    { name: '세피리아', pf: 'pc', genre: 'rogue', hours: 48.6 },
+    { name: 'Enter the Gungeon', pf: 'pc', genre: 'rogue', hours: 29.4 },
+    { name: 'Risk of Rain 2', pf: 'pc', genre: 'rogue', hours: 23.4 },
+    { name: 'Lost Castle', pf: 'pc', genre: 'rogue', hours: 17.7 },
+    { name: 'Risk of Rain', pf: 'pc', genre: 'rogue', hours: 15.5 },
+    { name: 'Gunfire Reborn', pf: 'pc', genre: 'rogue', hours: 12.9 },
 
     // 방치형 / 클리커
-    { name: 'TBH: 태스크바 히어로', genre: 'idle', hours: 619.3,
+    { name: 'TBH: 태스크바 히어로', pf: 'pc', genre: 'idle', hours: 619.3,
       featured: '스테이지 보상 상자의 운 요소가 성장에 크게 작용해 유저 간 격차가 벌어지는 구조를 관찰' },
-    { name: 'TAP NINJA', genre: 'idle', hours: 32.6 },
+    { name: 'TAP NINJA', pf: 'pc', genre: 'idle', hours: 32.6 },
 
     // 리듬
-    { name: '프로젝트 세카이', genre: 'rhythm', record: '4년', tier: '플래티넘',
+    { name: '프로젝트 세카이', pf: 'mobile', genre: 'rhythm', record: '4년', tier: '플래티넘',
       featured: '상한 없는 이벤트 랭킹 구조가 유저에게는 큰 부담이지만 매출에는 크게 기여하는 양면성을 체감' },
-    { name: 'hololive Dreams', genre: 'rhythm', hours: 78 },
+    { name: 'hololive Dreams', pf: 'pc', genre: 'rhythm', hours: 78 },
 
     // 액션 RPG / 헌팅
-    { name: 'Monster Hunter World', genre: 'action', hours: 74.9 },
-    { name: 'Trove', genre: 'action', hours: 43.4 },
-    { name: 'Hollow Knight', genre: 'action', hours: 43 },
+    { name: 'Monster Hunter World', pf: 'pc', genre: 'action', hours: 74.9 },
+    { name: 'Trove', pf: 'pc', genre: 'action', hours: 43.4 },
+    { name: 'Hollow Knight', pf: 'pc', genre: 'action', hours: 43 },
 
     // 대전격투
-    { name: 'TEKKEN 7', genre: 'fight', hours: 24.8 },
-    { name: 'Granblue Fantasy Versus: Rising', genre: 'fight', hours: 14.8, tier: 'S+' },
-    { name: 'Skullgirls', genre: 'fight', hours: 8.7 },
-    { name: 'Guilty Gear Xrd REV 2', genre: 'fight', hours: 8.4 },
+    { name: 'TEKKEN 7', pf: 'pc', genre: 'fight', hours: 24.8 },
+    { name: 'Granblue Fantasy Versus: Rising', pf: 'pc', genre: 'fight', hours: 14.8, tier: 'S+' },
+    { name: 'Skullgirls', pf: 'pc', genre: 'fight', hours: 8.7 },
+    { name: 'Guilty Gear Xrd REV 2', pf: 'pc', genre: 'fight', hours: 8.4 },
 
     // 협동 / 호러 / 소셜
-    { name: 'Dead by Daylight', genre: 'coop', hours: 31.8 },
-    { name: 'Among Us', genre: 'coop', hours: 27.9 },
-    { name: 'Goose Goose Duck', genre: 'coop', hours: 19.1 },
-    { name: 'Phasmophobia', genre: 'coop', hours: 10.7 },
+    { name: 'Dead by Daylight', pf: 'pc', genre: 'coop', hours: 31.8 },
+    { name: 'Among Us', pf: 'pc', genre: 'coop', hours: 27.9 },
+    { name: 'Goose Goose Duck', pf: 'pc', genre: 'coop', hours: 19.1 },
+    { name: 'Phasmophobia', pf: 'pc', genre: 'coop', hours: 10.7 },
 
     // 시뮬레이션 / 경영
-    { name: 'Lobotomy Corporation', genre: 'sim', hours: 97.7 },
+    { name: 'Lobotomy Corporation', pf: 'pc', genre: 'sim', hours: 97.7 },
 
     // MMORPG (모바일)
-    { name: '제우스: 오만의 신', genre: 'mmo', hours: 2, tier: '레인저 21레벨',
+    { name: '제우스: 오만의 신', pf: 'mobile', genre: 'mmo', hours: 2, tier: '레인저 21레벨',
       featured: '에픽 퀘스트 16 진행 중 적을 추적하지 못하는 버그를 발견' },
-    { name: '리니지 M', genre: 'mmo', hours: 2, tier: '암흑기사 32레벨',
+    { name: '리니지 M', pf: 'mobile', genre: 'mmo', hours: 2, tier: '암흑기사 32레벨',
       featured: '데미지 표기가 없고 강화 재료 수급이 어려워 성장 폭을 가늠하기 힘든 구조를 파악' },
 
     // 수집 / 육성 (모바일)
-    { name: '프린세스커넥트 Re:Dive', genre: 'collect', record: '3년' },
-    { name: '몬스터스트라이크', genre: 'collect', record: '3년' },
-    { name: 'Pokemon GO', genre: 'collect', hours: 300 },
-    { name: '트릭컬 리바이브', genre: 'collect', hours: 100 },
-    { name: '가디언 테일즈', genre: 'collect', hours: 100 },
-    { name: '드래곤빌리지', genre: 'collect', hours: 100 },
-    { name: 'Pokemon Champions', genre: 'collect', hours: 30, tier: '마스터볼' },
-    { name: '마스터 오브 이터니티', genre: 'collect', hours: 20 },
-    { name: '서머너즈워', genre: 'collect', hours: 10 },
-    { name: '스텔라소라', genre: 'collect', hours: 3 },
+    { name: '프린세스커넥트 Re:Dive', pf: 'mobile', genre: 'collect', record: '3년' },
+    { name: '몬스터스트라이크', pf: 'mobile', genre: 'collect', record: '3년' },
+    { name: 'Pokemon GO', pf: 'mobile', genre: 'collect', hours: 300 },
+    { name: '트릭컬 리바이브', pf: 'mobile', genre: 'collect', hours: 100 },
+    { name: '가디언 테일즈', pf: 'mobile', genre: 'collect', hours: 100 },
+    { name: '드래곤빌리지', pf: 'mobile', genre: 'collect', hours: 100 },
+    { name: 'Pokemon Champions', pf: 'mobile', genre: 'collect', hours: 30, tier: '마스터볼' },
+    { name: '마스터 오브 이터니티', pf: 'mobile', genre: 'collect', hours: 20 },
+    { name: '서머너즈워', pf: 'mobile', genre: 'collect', hours: 10 },
+    { name: '스텔라소라', pf: 'mobile', genre: 'collect', hours: 3 },
 
     // 디펜스 / 전략 (모바일)
-    { name: '클래시 로얄', genre: 'defense', record: '3년' },
-    { name: '명일방주', genre: 'defense', record: '2년' },
-    { name: '냥코대전쟁', genre: 'defense', record: '1년' },
-    { name: '운빨존많겜', genre: 'defense', record: '1년' },
-    { name: '클래시 오브 클랜', genre: 'defense', record: '1년' },
-    { name: '냥냥 시노비', genre: 'defense', hours: 100 },
-    { name: '던전메이커', genre: 'defense', hours: 80 },
-    { name: '짤툰 랜덤 디펜스', genre: 'defense', hours: 50 },
-    { name: '스타크래프트', genre: 'defense' },
-    { name: '스타크래프트 II', genre: 'defense' },
+    { name: '클래시 로얄', pf: 'mobile', genre: 'defense', record: '3년' },
+    { name: '명일방주', pf: 'mobile', genre: 'defense', record: '2년' },
+    { name: '냥코대전쟁', pf: 'mobile', genre: 'defense', record: '1년' },
+    { name: '운빨존많겜', pf: 'mobile', genre: 'defense', record: '1년' },
+    { name: '클래시 오브 클랜', pf: 'mobile', genre: 'defense', record: '1년' },
+    { name: '냥냥 시노비', pf: 'mobile', genre: 'defense', hours: 100 },
+    { name: '던전메이커', pf: 'mobile', genre: 'defense', hours: 80 },
+    { name: '짤툰 랜덤 디펜스', pf: 'mobile', genre: 'defense', hours: 50 },
+    { name: '스타크래프트', pf: 'pc', genre: 'defense' },
+    { name: '스타크래프트 II', pf: 'pc', genre: 'defense' },
 
     // 방치형 / 클리커 (모바일)
-    { name: '카피바라 Go!', genre: 'idle', record: '1년' },
-    { name: 'ALTER EGO', genre: 'idle', record: '엔딩' },
-    { name: '444번의 돌아왔어', genre: 'idle', record: '엔딩' },
-    { name: '거지키우기', genre: 'idle', record: '엔딩' },
-    { name: '뒷산에서 보석캐기', genre: 'idle', record: '엔딩' },
-    { name: '디지몬 UP', genre: 'idle', record: '7일' },
+    { name: '카피바라 Go!', pf: 'mobile', genre: 'idle', record: '1년' },
+    { name: 'ALTER EGO', pf: 'mobile', genre: 'idle', record: '엔딩' },
+    { name: '444번의 돌아왔어', pf: 'mobile', genre: 'idle', record: '엔딩' },
+    { name: '거지키우기', pf: 'mobile', genre: 'idle', record: '엔딩' },
+    { name: '뒷산에서 보석캐기', pf: 'mobile', genre: 'idle', record: '엔딩' },
+    { name: '디지몬 UP', pf: 'mobile', genre: 'idle', record: '7일' },
 
     // 퍼즐 / 캐주얼 (모바일)
-    { name: '드래곤 플라이트', genre: 'casual', record: '1년' },
-    { name: 'Meowdoku: 두뇌 퍼즐게임', genre: 'casual', hours: 3 },
-    { name: 'Parking Jam: Car Parking Games', genre: 'casual' },
-    { name: 'Angry Birds Rio', genre: 'casual' },
-    { name: 'Temple Run', genre: 'casual' },
-    { name: '길건너 친구들', genre: 'casual' },
+    { name: '드래곤 플라이트', pf: 'mobile', genre: 'casual', record: '1년' },
+    { name: 'Meowdoku: 두뇌 퍼즐게임', pf: 'mobile', genre: 'casual', hours: 3 },
+    { name: 'Parking Jam: Car Parking Games', pf: 'mobile', genre: 'casual' },
+    { name: 'Angry Birds Rio', pf: 'mobile', genre: 'casual' },
+    { name: 'Temple Run', pf: 'mobile', genre: 'casual' },
+    { name: '길건너 친구들', pf: 'mobile', genre: 'casual' },
 
     // 그 밖의 모바일 게임 (기존 장르에 추가)
-    { name: '궁수의 전설', genre: 'rogue', record: '약 1개월' },
-    { name: 'Soul Knight', genre: 'rogue' },
-    { name: '듀엣 나이트 어비스', genre: 'action', hours: 3 },
-    { name: '달빛조각사', genre: 'mmo', record: '1개월' },
-    { name: '말랑말랑 목장', genre: 'sim' },
-    { name: '미드나잇 마켓', genre: 'sim', hours: 3 },
-    { name: 'Plague Inc.', genre: 'sim' },
-    { name: '도망가 친구들', genre: 'coop' },
-    { name: '작혼', genre: 'card', record: '6년' },
-    { name: 'Pokemon Sword', genre: 'rpg', hours: 200 },
-    { name: 'Fate/Grand Order', genre: 'collect', record: '5년' },
-    { name: '메이플스토리', genre: 'mmo', tier: '나이트워커 240레벨' },
-    { name: '대어부시대', genre: 'idle', record: '엔딩' },
-    { name: '땅파기: 지구를 뚫어라', genre: 'idle', record: '엔딩' },
-    { name: '레전드오브슬라임', genre: 'idle', record: '3개월' },
+    { name: '궁수의 전설', pf: 'mobile', genre: 'rogue', record: '약 1개월' },
+    { name: 'Soul Knight', pf: 'mobile', genre: 'rogue' },
+    { name: '듀엣 나이트 어비스', pf: 'mobile', genre: 'action', hours: 3 },
+    { name: '달빛조각사', pf: 'mobile', genre: 'mmo', record: '1개월' },
+    { name: '말랑말랑 목장', pf: 'mobile', genre: 'sim' },
+    { name: '미드나잇 마켓', pf: 'mobile', genre: 'sim', hours: 3 },
+    { name: 'Plague Inc.', pf: 'mobile', genre: 'sim' },
+    { name: '도망가 친구들', pf: 'mobile', genre: 'coop' },
+    { name: '작혼', pf: 'pc', genre: 'card', record: '6년' },
+    { name: 'Pokemon Sword', pf: 'console', genre: 'rpg', hours: 200 },
+    { name: 'Fate/Grand Order', pf: 'mobile', genre: 'collect', record: '5년' },
+    { name: '메이플스토리', pf: 'pc', genre: 'mmo', tier: '나이트워커 240레벨' },
+    { name: '대어부시대', pf: 'mobile', genre: 'idle', record: '엔딩' },
+    { name: '땅파기: 지구를 뚫어라', pf: 'mobile', genre: 'idle', record: '엔딩' },
+    { name: '레전드오브슬라임', pf: 'mobile', genre: 'idle', record: '3개월' },
   ];
 
   // 대표 게임 표시 순서
@@ -354,6 +376,11 @@
 
   // 요약 문장
   const totalHours = GAMES.reduce((sum, g) => sum + (g.hours || 0), 0);
+  const PF_NAME = { pc: 'PC', console: '콘솔', mobile: '모바일' };
+  const pfCount = GAMES.reduce((acc, g) => (acc[g.pf] = (acc[g.pf] || 0) + 1, acc), {});
+  document.getElementById('platforms').innerHTML = ['pc', 'console', 'mobile']
+    .map(k => `<span class="pf-chip">${PF_NAME[k]}<b>${pfCount[k]}개</b></span>`).join('');
+
   document.getElementById('summary').innerHTML =
     `PC, 스위치, 모바일에서 <strong>${GAMES.length}개 게임</strong>을 <strong>${GENRES.length}개 장르</strong>에 걸쳐 플레이했고, ` +
     `기록이 남아 있는 플레이타임만 합쳐도 <strong>약 ${(Math.round(totalHours / 100) * 100).toLocaleString('ko-KR')}시간</strong>입니다.`;

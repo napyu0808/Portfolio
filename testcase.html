@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>이진혁 | 테스트 케이스 자동 생성</title>
+  <meta name="description" content="기능 명세를 읽어 표준 양식 테스트 케이스를 생성하는 프로세스 자동화 프로젝트. TC 166건, 명세 이슈 16건." />
+  <style>
+    :root {
+      --accent: #978FF9;
+      --accent-dim: rgba(151, 143, 249, 0.12);
+      --accent-border: rgba(151, 143, 249, 0.28);
+      --bg: #0d0d0d;
+      --surface: #161616;
+      --surface2: #1f1f1f;
+      --border: #2a2a2a;
+      --text: #e2e2e2;
+      --text-sub: #888;
+      --ok: #51cf66;
+      --warn: #ffa94d;
+      --danger: #ff6b6b;
+      --radius: 14px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { font-size: 18px; scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Noto Sans KR', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.75;
+      word-break: keep-all;
+      overflow-wrap: break-word;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    p, li, dd, td { text-wrap: pretty; }
+    h1, h2, h3, .lead { text-wrap: balance; }
+
+    /* ── HERO ── */
+    .hero {
+      padding: 92px 24px 72px;
+      text-align: center;
+      border-bottom: 1px solid var(--border);
+      background:
+        radial-gradient(900px 340px at 50% -8%, var(--accent-dim), transparent 70%),
+        var(--bg);
+    }
+    .hero .eyebrow { font-size: 0.95rem; font-weight: 700; color: var(--text-sub); letter-spacing: 0.04em; }
+    .hero h1 {
+      font-size: clamp(1.9rem, 5.5vw, 3rem);
+      font-weight: 800; line-height: 1.25; margin: 10px 0 18px;
+    }
+    .hero h1 em { font-style: normal; color: var(--accent); }
+    .hero .lead { font-size: 1.1rem; color: var(--text-sub); max-width: 660px; margin: 0 auto; }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky; top: 0; z-index: 20;
+      background: rgba(13, 13, 13, 0.92);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+    }
+    nav .inner {
+      max-width: 1000px; margin: 0 auto; padding: 0 20px;
+      display: flex; gap: 22px; overflow-x: auto; scrollbar-width: none;
+    }
+    nav .inner::-webkit-scrollbar { display: none; }
+    nav a {
+      flex: none; padding: 15px 0;
+      font-size: 0.95rem; font-weight: 700; color: var(--text-sub);
+    }
+    nav a:hover { color: var(--accent); }
+
+    /* ── MAIN ── */
+    main {
+      max-width: 1000px; margin: 0 auto;
+      padding: 56px 20px 100px;
+      display: flex; flex-direction: column; gap: 56px;
+    }
+    section { scroll-margin-top: 70px; }
+
+    .section-title {
+      font-size: 1.8rem; font-weight: 800; color: var(--accent);
+      margin-bottom: 10px; display: flex; align-items: center; gap: 10px;
+    }
+    .section-title::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+    .section-desc { font-size: 1rem; color: var(--text-sub); margin-bottom: 24px; }
+
+    .card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 28px 32px;
+    }
+    .card + .card { margin-top: 16px; }
+    .card h3 { font-size: 1.2rem; font-weight: 800; margin-bottom: 12px; }
+    .card p + p { margin-top: 14px; }
+
+    /* ── 숫자 ── */
+    .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+    .stat {
+      background: var(--surface); border: 1px solid var(--border);
+      border-top: 3px solid var(--accent); border-radius: var(--radius);
+      padding: 22px 18px; text-align: center;
+    }
+    .stat .num { font-size: 1.9rem; font-weight: 800; color: var(--accent); line-height: 1.2; }
+    .stat .label { font-size: 0.88rem; color: var(--text-sub); margin-top: 6px; }
+
+    /* ── 흐름 ── */
+    .flow { display: flex; flex-wrap: wrap; align-items: stretch; gap: 10px; }
+    .flow .step {
+      flex: 1 1 150px; background: var(--surface2); border: 1px solid var(--border);
+      border-radius: 10px; padding: 16px 18px; font-size: 0.92rem; line-height: 1.6;
+    }
+    .flow .step b { display: block; font-size: 0.82rem; color: var(--accent); margin-bottom: 4px; }
+    .flow .arr { align-self: center; color: var(--text-sub); }
+
+    /* ── 목록 ── */
+    ul.plain { padding-left: 20px; font-size: 1rem; }
+    ul.plain li + li { margin-top: 10px; }
+    ul.plain b { color: var(--accent); }
+
+    /* ── 표 ── */
+    .tbl-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: 10px; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+    th, td { text-align: left; padding: 12px 14px; border-bottom: 1px solid var(--border); vertical-align: top; }
+    th { background: var(--surface2); color: var(--text-sub); font-weight: 700; font-size: 0.84rem; white-space: nowrap; }
+    tr:last-child td { border-bottom: none; }
+    td.id { font-weight: 700; color: var(--accent); white-space: nowrap; }
+
+    .pill {
+      display: inline-block; font-size: 0.78rem; font-weight: 700;
+      padding: 2px 10px; border-radius: 999px; white-space: nowrap;
+    }
+    .p-normal { background: rgba(81,207,102,.14); color: var(--ok); }
+    .p-bound  { background: rgba(255,169,77,.14); color: var(--warn); }
+    .p-except { background: rgba(255,107,107,.14); color: var(--danger); }
+    .p-tech   { background: var(--accent-dim); color: var(--accent); border: 1px solid var(--accent-border); }
+
+    /* ── 산출물 ── */
+    .files { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+    .file {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 22px 24px;
+    }
+    .file .fname { font-weight: 800; font-size: 1.02rem; margin-bottom: 10px; }
+    .file .cnt { font-size: 0.88rem; color: var(--text-sub); margin-bottom: 14px; }
+    .file .dl {
+      display: inline-flex; align-items: center; gap: 5px;
+      background: var(--accent); color: #0d0d0d;
+      border-radius: 999px; padding: 6px 16px;
+      font-size: 0.85rem; font-weight: 800;
+    }
+    .file .dl + .dl { margin-left: 6px; background: var(--surface2); color: var(--text-sub); border: 1px solid var(--border); }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 28px 20px 48px; text-align: center;
+      font-size: 0.9rem; color: var(--text-sub);
+    }
+
+    @media (max-width: 860px) {
+      html { font-size: 16px; }
+      .hero { padding: 64px 20px 52px; }
+      .stats { grid-template-columns: repeat(2, 1fr); }
+      .files { grid-template-columns: 1fr; }
+      .flow .arr { display: none; }
+      .card { padding: 24px 20px; }
+      main { padding: 40px 16px 72px; gap: 44px; }
+      nav .inner { padding: 0 16px; gap: 18px; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="eyebrow">이진혁 · QA 포트폴리오</div>
+  <h1>기능 명세에서 <em>테스트 케이스</em>를 만들어내는 자동화</h1>
+  <p class="lead">기획서를 읽고 표준 양식 테스트 케이스를 생성하는 프로세스를 직접 설계했습니다. 명세 3건에서 TC 166건을 뽑았고, 그 과정에서 명세 자체의 결함 16건을 찾아냈습니다.</p>
+</header>
+
+<nav>
+  <div class="inner">
+    <a href="#summary">요약</a>
+    <a href="#flow">동작 방식</a>
+    <a href="#rules">생성 규칙</a>
+    <a href="#samples">TC 샘플</a>
+    <a href="#issues">명세 이슈</a>
+    <a href="#files">산출물</a>
+  </div>
+</nav>
+
+<main>
+
+  <!-- 요약 -->
+  <section id="summary">
+    <div class="section-title">요약</div>
+    <div class="stats">
+      <div class="stat"><div class="num">166건</div><div class="label">생성한 테스트 케이스</div></div>
+      <div class="stat"><div class="num">16건</div><div class="label">발견한 명세 결함</div></div>
+      <div class="stat"><div class="num">4종</div><div class="label">적용 설계 기법</div></div>
+      <div class="stat"><div class="num">13열</div><div class="label">표준 TC 양식</div></div>
+    </div>
+  </section>
+
+  <!-- 동작 방식 -->
+  <section id="flow">
+    <div class="section-title">동작 방식</div>
+    <p class="section-desc">기능 명세(.md)를 넣으면 QA 양식 테스트 케이스(.xlsx)가 나옵니다.</p>
+    <div class="card">
+      <div class="flow">
+        <div class="step"><b>1. 입력</b>기능 명세 작성 — 입력 필드, 동작 규칙, 수치 범위, 오류 메시지, 상태 전이</div>
+        <span class="arr">→</span>
+        <div class="step"><b>2. 요소 추출</b>규칙·필드 단위로 분해하고 수치 범위와 상태 전이를 식별</div>
+        <span class="arr">→</span>
+        <div class="step"><b>3. 케이스 도출</b>규칙마다 정상·경계·예외를 각 1건 이상 생성</div>
+        <span class="arr">→</span>
+        <div class="step"><b>4. 출력</b>Test Cases 시트와 Spec Issues 시트로 구성된 .xlsx</div>
+      </div>
+      <p style="margin-top:18px; color:var(--text-sub); font-size:0.95rem">
+        요소 파악부터 집계까지를 자동화하고, 커버리지와 기대 결과의 최종 검토는 사람이 맡도록 범위를 정했습니다.
+      </p>
+    </div>
+  </section>
+
+  <!-- 생성 규칙 -->
+  <section id="rules">
+    <div class="section-title">생성 규칙</div>
+    <p class="section-desc">자동화의 품질은 규칙이 결정합니다. 아래 기준을 문서로 고정해 두고 생성합니다.</p>
+
+    <div class="card">
+      <h3>케이스 도출</h3>
+      <ul class="plain">
+        <li><b>정상·경계·예외를 각 1건 이상</b> — 셋 중 하나라도 빠지면 표를 완성하지 않습니다.</li>
+        <li><b>수치 범위는 네 지점</b> — 하한-1 / 하한 / 상한 / 상한+1을 각각 케이스로 만듭니다.</li>
+        <li><b>상태 전이는 양방향</b> — 허용 전이와 금지 전이를 각각 케이스로 만듭니다.</li>
+        <li><b>예외의 정의</b> — 규칙 위반, 필수 누락, 형식 오류, 상태·권한 위반.</li>
+        <li><b>한 행에 한 케이스</b> — 여러 케이스를 한 셀에 합치지 않습니다.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>분류 기준</h3>
+      <ul class="plain">
+        <li><b>기법</b> — EP(동등 분할) · BVA(경계값 분석) · DT(결정 테이블) · ST(상태 전이) 중 적용한 것을 표기합니다.</li>
+        <li><b>우선순위</b> — 예외는 High, 경계는 Medium, 정상은 Low로 자동 부여합니다.</li>
+        <li><b>상태</b> — Pass / Fail / Blocked / N/A / Not Run 목록 제약을 걸고 기본값은 Not Run입니다.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>지어내지 않기</h3>
+      <ul class="plain">
+        <li>명세에 없는 수치·메시지·규칙을 사실처럼 적지 않습니다.</li>
+        <li>추정이 불가피하면 해당 셀에 <b>[가정]</b>을 붙여 표시합니다.</li>
+        <li>명세의 모순과 누락은 지어내서 메우지 않고 <b>Spec Issues</b> 시트에 기록합니다.</li>
+        <li>기대 결과는 구체적 값으로 적고 "정상 동작" 같은 모호한 표현을 쓰지 않습니다.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- TC 샘플 -->
+  <section id="samples">
+    <div class="section-title">실제 TC 샘플</div>
+    <p class="section-desc">슬레이 더 스파이어 전투 시스템 명세에서 생성한 66건 중 유형별로 한 건씩 가져왔습니다.</p>
+    <div class="card" style="padding:0; overflow:hidden">
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>TC ID</th><th>대분류</th><th>시나리오</th><th>유형</th><th>기법</th>
+              <th>테스트 데이터 / 조건</th><th>기대 결과</th><th>우선순위</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="id">TC-01</td>
+              <td>턴 구조</td>
+              <td>전투 시작 시 플레이어 선공</td>
+              <td><span class="pill p-normal">정상</span></td>
+              <td><span class="pill p-tech">EP</span></td>
+              <td>전투 진입 직후</td>
+              <td>적이 먼저 행동하지 않고 플레이어 턴부터 시작</td>
+              <td>Low</td>
+            </tr>
+            <tr>
+              <td class="id">TC-04</td>
+              <td>턴 구조</td>
+              <td>적 턴 도중 마지막 적 처치 → 즉시 승리</td>
+              <td><span class="pill p-bound">경계</span></td>
+              <td><span class="pill p-tech">ST</span></td>
+              <td>적 턴 중 반사 피해 등으로 마지막 적 체력 0</td>
+              <td>적 턴 도중이라도 즉시 전투 승리, 남은 적 행동 취소</td>
+              <td>Medium</td>
+            </tr>
+            <tr>
+              <td class="id">TC-09</td>
+              <td>에너지</td>
+              <td>에너지 0에서 비용 1 카드 플레이 시도</td>
+              <td><span class="pill p-except">예외</span></td>
+              <td><span class="pill p-tech">EP</span></td>
+              <td>카드 비용 1, 보유 에너지 0</td>
+              <td>플레이 무효, 에너지·손패 불변</td>
+              <td>High</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="card">
+      <h3>전체 13열 구성</h3>
+      <p style="color:var(--text-sub); font-size:0.95rem">
+        TC ID · 대분류 · 테스트 시나리오 · 우선순위 · 유형 · 기법 · 전제조건 · 테스트 절차 ·
+        테스트 데이터/조건 · 기대 결과 · 실제 결과 · 상태 · 비고
+      </p>
+      <p style="margin-top:12px">
+        시트 상단에는 명세 파일명과 작성일, 유형별 건수 집계를 수식으로 넣어 실행 결과를 기록하면
+        Pass Rate가 자동으로 갱신되도록 했습니다.
+      </p>
+    </div>
+  </section>
+
+  <!-- 명세 이슈 -->
+  <section id="issues">
+    <div class="section-title">명세 이슈</div>
+    <p class="section-desc">테스트 케이스를 만들다 보면 명세의 빈틈이 드러납니다. 위치·문제·제안 세 열로 정리해 별도 시트에 남깁니다.</p>
+    <div class="card" style="padding:0; overflow:hidden">
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr><th style="width:22%">위치</th><th style="width:42%">문제</th><th>제안</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>§6 공격 피해 계산 (다단 히트)</td>
+              <td>1번은 '타격당 피해 = 기본 + 힘'만 규정하고 2·3번(약화·취약 배수)이 히트 단위인지 합계 단위인지 불분명</td>
+              <td>'2·3번 배수는 각 히트의 피해에 개별 적용한다'처럼 히트 단위 적용을 명시</td>
+            </tr>
+            <tr>
+              <td>§7 취약/약화/손상 감소 시점</td>
+              <td>'대상 또는 보유자의 턴 종료 시 1 감소'로만 되어 있어 적이 보유한 디버프의 감소 시점이 모호</td>
+              <td>적 보유 디버프는 '적 턴 종료 시' 감소한다고 별도 문장으로 고정</td>
+            </tr>
+            <tr>
+              <td>§5·§7 배수 계열 노드 구성</td>
+              <td>배수(%) 노드가 몇 종인지, 각 노드의 최대 레벨과 버킷 상한이 명시되지 않음</td>
+              <td>노드 종류 수와 노드별 최대 레벨, 상한 도달 설계 의도를 명시</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="card">
+      <p><strong>명세 3건에서 결함 16건을 찾았습니다.</strong> 테스트 케이스를 쓰려면 기대 결과를 확정해야 하는데, 확정할 수 없는 지점이 곧 기획서의 구멍입니다. 코드가 나오기 전에 기획 단계에서 잡아낼 수 있는 결함입니다.</p>
+    </div>
+  </section>
+
+  <!-- 산출물 -->
+  <section id="files">
+    <div class="section-title">산출물</div>
+    <p class="section-desc">입력 명세와 생성된 테스트 케이스를 모두 내려받을 수 있습니다.</p>
+    <div class="files">
+      <div class="file">
+        <div class="fname">슬레이 더 스파이어 — 전투 시스템</div>
+        <div class="cnt">TC 66건 · 정상 31 / 경계 26 / 예외 9 · 명세 이슈 4건</div>
+        <a class="dl" href="testcase-files/TC-slay-the-spire-combat.xlsx" download>TC 받기</a>
+        <a class="dl" href="testcase-files/spec_slay-the-spire-combat.md" download>명세 보기</a>
+      </div>
+      <div class="file">
+        <div class="fname">블랙홀 키우기 — 인크리멘탈 클리커</div>
+        <div class="cnt">TC 57건 · 정상 22 / 경계 16 / 예외 19 · 명세 이슈 12건</div>
+        <a class="dl" href="testcase-files/TC-blackhole-clicker.xlsx" download>TC 받기</a>
+        <a class="dl" href="testcase-files/SPEC-blackhole-clicker.md" download>명세 보기</a>
+      </div>
+      <div class="file">
+        <div class="fname">림버스 컴퍼니 — 전체 개요</div>
+        <div class="cnt">TC 43건 · 정상 16 / 경계 17 / 예외 10</div>
+        <a class="dl" href="testcase-files/TC-limbus-company-overview.xlsx" download>TC 받기</a>
+        <a class="dl" href="testcase-files/SPEC-limbus-company-overview.md" download>명세 보기</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  유한대학교 자동화 프로세스 과제로 제작했습니다. 생성 규칙은 프로젝트 내 문서로 관리합니다.
+</footer>
+
+</body>
+</html>

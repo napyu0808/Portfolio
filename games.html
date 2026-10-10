@@ -7,12 +7,13 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
 <style>
   :root {
-    --bg: #F2F4F8;
-    --paper: #FFFFFF;
-    --ink: #172033;
-    --muted: #5B6478;
-    --rule: #D5DAE3;
-    --accent: #2C5BE8;
+    --bg: #0d0d0d;
+    --paper: #161616;
+    --surface2: #1f1f1f;
+    --ink: #e2e2e2;
+    --muted: #888;
+    --rule: #2a2a2a;
+    --accent: #978FF9;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body {
@@ -73,13 +74,13 @@
   .chip {
     font-size: 11.5px; font-weight: 600;
     padding: 2px 8px; border-radius: 999px;
-    background: #EDF1FD; color: var(--accent);
+    background: rgba(151, 143, 249, 0.14); color: var(--accent);
   }
-  .chip.plain { background: #F1F3F6; color: var(--muted); }
+  .chip.plain { background: var(--surface2); color: var(--muted); }
   .f-comment {
-    font-size: 13.5px; color: #3A4356;
+    font-size: 13.5px; color: #b9bdc9;
     margin-top: 14px; padding-top: 14px;
-    border-top: 1px solid #EDF0F4;
+    border-top: 1px solid var(--rule);
     word-break: keep-all;
     text-wrap: balance;
   }
@@ -111,7 +112,7 @@
     padding: 7px 16px;
     font-size: 14px;
   }
-  .g-list li + li { border-top: 1px solid #F1F3F6; }
+  .g-list li + li { border-top: 1px solid #232323; }
   .g-game { flex: 1; word-break: keep-all; }
   .g-list li.is-featured .g-game { font-weight: 700; }
   .g-list li.is-featured .g-game::before {
@@ -167,7 +168,7 @@
     .featured, .genres { grid-template-columns: 1fr; }
   }
   @media print {
-    body { background: #fff; }
+    body { background: #fff; color: #000; }
     .f-card, .g-box { break-inside: avoid; }
   }
 </style>
@@ -204,21 +205,21 @@
 <script>
   // 장르 정의 (색상은 장르 구분용)
   const GENRES = [
-    { id: 'rpg',     name: 'RPG / 스토리',        color: '#7C4DDB' },
-    { id: 'shooter', name: '슈터',                 color: '#D9480F' },
-    { id: 'moba',    name: 'MOBA / 배틀로얄',      color: '#1C7ED6' },
-    { id: 'card',    name: '덱빌딩 / 카드',        color: '#0CA678' },
-    { id: 'rogue',   name: '로그라이트 액션',      color: '#E8590C' },
-    { id: 'idle',    name: '방치형 / 클리커',      color: '#F59F00' },
-    { id: 'rhythm',  name: '리듬',                 color: '#E64980' },
-    { id: 'action',  name: '액션 RPG / 헌팅',      color: '#2F9E44' },
-    { id: 'fight',   name: '대전격투',             color: '#C92A2A' },
-    { id: 'coop',    name: '협동 / 호러 / 소셜',   color: '#495057' },
-    { id: 'sim',     name: '시뮬레이션 / 경영',    color: '#1098AD' },
-    { id: 'mmo',     name: 'MMORPG',               color: '#9C6644' },
-    { id: 'collect', name: '수집 / 육성',          color: '#74B816' },
-    { id: 'defense', name: '디펜스 / 전략',        color: '#5F3DC4' },
-    { id: 'casual',  name: '퍼즐 / 캐주얼',        color: '#3BC9DB' },
+    { id: 'rpg',     name: 'RPG / 스토리',        color: '#9775FA' },
+    { id: 'shooter', name: '슈터',                 color: '#FF922B' },
+    { id: 'moba',    name: 'MOBA / 배틀로얄',      color: '#4DABF7' },
+    { id: 'card',    name: '덱빌딩 / 카드',        color: '#20C997' },
+    { id: 'rogue',   name: '로그라이트 액션',      color: '#FD7E14' },
+    { id: 'idle',    name: '방치형 / 클리커',      color: '#FCC419' },
+    { id: 'rhythm',  name: '리듬',                 color: '#F06595' },
+    { id: 'action',  name: '액션 RPG / 헌팅',      color: '#51CF66' },
+    { id: 'fight',   name: '대전격투',             color: '#FF6B6B' },
+    { id: 'coop',    name: '협동 / 호러 / 소셜',   color: '#ADB5BD' },
+    { id: 'sim',     name: '시뮬레이션 / 경영',    color: '#22B8CF' },
+    { id: 'mmo',     name: 'MMORPG',               color: '#C9956B' },
+    { id: 'collect', name: '수집 / 육성',          color: '#94D82D' },
+    { id: 'defense', name: '디펜스 / 전략',        color: '#845EF7' },
+    { id: 'casual',  name: '퍼즐 / 캐주얼',        color: '#66D9E8' },
   ];
 
   // 전체 게임 목록 (hours: 숫자 플레이타임, record: 시간 대신 표기할 기록)

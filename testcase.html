@@ -123,10 +123,23 @@
     ul.plain b { color: var(--accent); }
 
     /* ── 표 ── */
-    .tbl-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: 10px; }
-    table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
-    th, td { text-align: left; padding: 12px 14px; border-bottom: 1px solid var(--border); vertical-align: top; }
+    .tbl-wrap {
+      overflow-x: auto; border: 1px solid var(--border); border-radius: 10px;
+      -webkit-overflow-scrolling: touch;
+    }
+    table {
+      width: 100%; min-width: 1120px;
+      border-collapse: collapse; font-size: 0.9rem;
+    }
+    table.issues { min-width: 760px; }
+    th, td {
+      text-align: left; padding: 13px 15px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+      word-break: keep-all; text-wrap: pretty; line-height: 1.65;
+    }
     th { background: var(--surface2); color: var(--text-sub); font-weight: 700; font-size: 0.84rem; white-space: nowrap; }
+    .scroll-hint { font-size: 0.82rem; color: var(--text-sub); margin-top: 10px; }
     tr:last-child td { border-bottom: none; }
     td.id { font-weight: 700; color: var(--accent); white-space: nowrap; }
 
@@ -185,10 +198,10 @@
   <div class="inner">
     <a href="#summary">요약</a>
     <a href="#flow">동작 방식</a>
-    <a href="#rules">생성 규칙</a>
     <a href="#samples">TC 샘플</a>
-    <a href="#issues">명세 이슈</a>
     <a href="#files">산출물</a>
+    <a href="#issues">명세 이슈</a>
+    <a href="#rules">생성 규칙</a>
   </div>
 </nav>
 
@@ -225,41 +238,9 @@
     </div>
   </section>
 
-  <!-- 생성 규칙 -->
-  <section id="rules">
-    <div class="section-title">생성 규칙</div>
-    <p class="section-desc">자동화의 품질은 규칙이 결정합니다. 아래 기준을 문서로 고정해 두고 생성합니다.</p>
 
-    <div class="card">
-      <h3>케이스 도출</h3>
-      <ul class="plain">
-        <li><b>정상·경계·예외를 각 1건 이상</b> — 셋 중 하나라도 빠지면 표를 완성하지 않습니다.</li>
-        <li><b>수치 범위는 네 지점</b> — 하한-1 / 하한 / 상한 / 상한+1을 각각 케이스로 만듭니다.</li>
-        <li><b>상태 전이는 양방향</b> — 허용 전이와 금지 전이를 각각 케이스로 만듭니다.</li>
-        <li><b>예외의 정의</b> — 규칙 위반, 필수 누락, 형식 오류, 상태·권한 위반.</li>
-        <li><b>한 행에 한 케이스</b> — 여러 케이스를 한 셀에 합치지 않습니다.</li>
-      </ul>
-    </div>
 
-    <div class="card">
-      <h3>분류 기준</h3>
-      <ul class="plain">
-        <li><b>기법</b> — EP(동등 분할) · BVA(경계값 분석) · DT(결정 테이블) · ST(상태 전이) 중 적용한 것을 표기합니다.</li>
-        <li><b>우선순위</b> — 예외는 High, 경계는 Medium, 정상은 Low로 자동 부여합니다.</li>
-        <li><b>상태</b> — Pass / Fail / Blocked / N/A / Not Run 목록 제약을 걸고 기본값은 Not Run입니다.</li>
-      </ul>
-    </div>
 
-    <div class="card">
-      <h3>지어내지 않기</h3>
-      <ul class="plain">
-        <li>명세에 없는 수치·메시지·규칙을 사실처럼 적지 않습니다.</li>
-        <li>추정이 불가피하면 해당 셀에 <b>[가정]</b>을 붙여 표시합니다.</li>
-        <li>명세의 모순과 누락은 지어내서 메우지 않고 <b>Spec Issues</b> 시트에 기록합니다.</li>
-        <li>기대 결과는 구체적 값으로 적고 "정상 동작" 같은 모호한 표현을 쓰지 않습니다.</li>
-      </ul>
-    </div>
-  </section>
 
   <!-- TC 샘플 -->
   <section id="samples">
@@ -270,8 +251,9 @@
         <table>
           <thead>
             <tr>
-              <th>TC ID</th><th>대분류</th><th>시나리오</th><th>유형</th><th>기법</th>
-              <th>테스트 데이터 / 조건</th><th>기대 결과</th><th>우선순위</th>
+              <th style="width:78px">TC ID</th><th style="width:92px">대분류</th>
+              <th style="width:225px">시나리오</th><th style="width:76px">유형</th><th style="width:70px">기법</th>
+              <th style="width:195px">테스트 데이터 / 조건</th><th style="min-width:250px">기대 결과</th><th style="width:88px">우선순위</th>
             </tr>
           </thead>
           <tbody>
@@ -322,15 +304,41 @@
     </div>
   </section>
 
+  <!-- 산출물 -->
+  <section id="files">
+    <div class="section-title">산출물</div>
+    <p class="section-desc">입력 명세와 생성된 테스트 케이스를 모두 내려받을 수 있습니다.</p>
+    <div class="files">
+      <div class="file">
+        <div class="fname">슬레이 더 스파이어 — 전투 시스템</div>
+        <div class="cnt">TC 66건 · 정상 31 / 경계 26 / 예외 9 · 명세 이슈 4건</div>
+        <a class="dl" href="testcase-files/TC-slay-the-spire-combat.xlsx" download>TC 받기</a>
+        <a class="dl" href="testcase-files/spec_slay-the-spire-combat.md" download>명세 보기</a>
+      </div>
+      <div class="file">
+        <div class="fname">블랙홀 키우기 — 인크리멘탈 클리커</div>
+        <div class="cnt">TC 57건 · 정상 22 / 경계 16 / 예외 19 · 명세 이슈 12건</div>
+        <a class="dl" href="testcase-files/TC-blackhole-clicker.xlsx" download>TC 받기</a>
+        <a class="dl" href="testcase-files/SPEC-blackhole-clicker.md" download>명세 보기</a>
+      </div>
+      <div class="file">
+        <div class="fname">림버스 컴퍼니 — 전체 개요</div>
+        <div class="cnt">TC 43건 · 정상 16 / 경계 17 / 예외 10</div>
+        <a class="dl" href="testcase-files/TC-limbus-company-overview.xlsx" download>TC 받기</a>
+        <a class="dl" href="testcase-files/SPEC-limbus-company-overview.md" download>명세 보기</a>
+      </div>
+    </div>
+  </section>
+
   <!-- 명세 이슈 -->
   <section id="issues">
     <div class="section-title">명세 이슈</div>
     <p class="section-desc">테스트 케이스를 만들다 보면 명세의 빈틈이 드러납니다. 위치·문제·제안 세 열로 정리해 별도 시트에 남깁니다.</p>
     <div class="card" style="padding:0; overflow:hidden">
       <div class="tbl-wrap">
-        <table>
+        <table class="issues">
           <thead>
-            <tr><th style="width:22%">위치</th><th style="width:42%">문제</th><th>제안</th></tr>
+            <tr><th style="width:190px">위치</th><th style="width:40%">문제</th><th>제안</th></tr>
           </thead>
           <tbody>
             <tr>
@@ -357,31 +365,43 @@
     </div>
   </section>
 
-  <!-- 산출물 -->
-  <section id="files">
-    <div class="section-title">산출물</div>
-    <p class="section-desc">입력 명세와 생성된 테스트 케이스를 모두 내려받을 수 있습니다.</p>
-    <div class="files">
-      <div class="file">
-        <div class="fname">슬레이 더 스파이어 — 전투 시스템</div>
-        <div class="cnt">TC 66건 · 정상 31 / 경계 26 / 예외 9 · 명세 이슈 4건</div>
-        <a class="dl" href="testcase-files/TC-slay-the-spire-combat.xlsx" download>TC 받기</a>
-        <a class="dl" href="testcase-files/spec_slay-the-spire-combat.md" download>명세 보기</a>
-      </div>
-      <div class="file">
-        <div class="fname">블랙홀 키우기 — 인크리멘탈 클리커</div>
-        <div class="cnt">TC 57건 · 정상 22 / 경계 16 / 예외 19 · 명세 이슈 12건</div>
-        <a class="dl" href="testcase-files/TC-blackhole-clicker.xlsx" download>TC 받기</a>
-        <a class="dl" href="testcase-files/SPEC-blackhole-clicker.md" download>명세 보기</a>
-      </div>
-      <div class="file">
-        <div class="fname">림버스 컴퍼니 — 전체 개요</div>
-        <div class="cnt">TC 43건 · 정상 16 / 경계 17 / 예외 10</div>
-        <a class="dl" href="testcase-files/TC-limbus-company-overview.xlsx" download>TC 받기</a>
-        <a class="dl" href="testcase-files/SPEC-limbus-company-overview.md" download>명세 보기</a>
-      </div>
+  <!-- 생성 규칙 -->
+  <section id="rules">
+    <div class="section-title">생성 규칙</div>
+    <p class="section-desc">자동화의 품질은 규칙이 결정합니다. 아래 기준을 문서로 고정해 두고 생성합니다.</p>
+
+    <div class="card">
+      <h3>케이스 도출</h3>
+      <ul class="plain">
+        <li><b>정상·경계·예외를 각 1건 이상</b> — 셋 중 하나라도 빠지면 표를 완성하지 않습니다.</li>
+        <li><b>수치 범위는 네 지점</b> — 하한-1 / 하한 / 상한 / 상한+1을 각각 케이스로 만듭니다.</li>
+        <li><b>상태 전이는 양방향</b> — 허용 전이와 금지 전이를 각각 케이스로 만듭니다.</li>
+        <li><b>예외의 정의</b> — 규칙 위반, 필수 누락, 형식 오류, 상태·권한 위반.</li>
+        <li><b>한 행에 한 케이스</b> — 여러 케이스를 한 셀에 합치지 않습니다.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>분류 기준</h3>
+      <ul class="plain">
+        <li><b>기법</b> — EP(동등 분할) · BVA(경계값 분석) · DT(결정 테이블) · ST(상태 전이) 중 적용한 것을 표기합니다.</li>
+        <li><b>우선순위</b> — 예외는 High, 경계는 Medium, 정상은 Low로 자동 부여합니다.</li>
+        <li><b>상태</b> — Pass / Fail / Blocked / N/A / Not Run 목록 제약을 걸고 기본값은 Not Run입니다.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>지어내지 않기</h3>
+      <ul class="plain">
+        <li>명세에 없는 수치·메시지·규칙을 사실처럼 적지 않습니다.</li>
+        <li>추정이 불가피하면 해당 셀에 <b>[가정]</b>을 붙여 표시합니다.</li>
+        <li>명세의 모순과 누락은 지어내서 메우지 않고 <b>Spec Issues</b> 시트에 기록합니다.</li>
+        <li>기대 결과는 구체적 값으로 적고 "정상 동작" 같은 모호한 표현을 쓰지 않습니다.</li>
+      </ul>
     </div>
   </section>
+
+
 
 </main>
 

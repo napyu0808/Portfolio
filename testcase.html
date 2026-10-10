@@ -111,8 +111,9 @@
     /* ── 흐름 ── */
     .flow { display: flex; flex-wrap: wrap; align-items: stretch; gap: 10px; }
     .flow .step {
-      flex: 1 1 150px; background: var(--surface2); border: 1px solid var(--border);
-      border-radius: 10px; padding: 16px 18px; font-size: 0.92rem; line-height: 1.6;
+      flex: 1 1 185px; background: var(--surface2); border: 1px solid var(--border);
+      border-radius: 10px; padding: 16px 18px; font-size: 0.92rem; line-height: 1.65;
+      word-break: keep-all; text-wrap: balance;
     }
     .flow .step b { display: block; font-size: 0.82rem; color: var(--accent); margin-bottom: 4px; }
     .flow .arr { align-self: center; color: var(--text-sub); }
@@ -128,7 +129,7 @@
       -webkit-overflow-scrolling: touch;
     }
     table {
-      width: 100%; min-width: 1120px;
+      width: 100%; min-width: 900px;
       border-collapse: collapse; font-size: 0.9rem;
     }
     table.issues { min-width: 760px; }
@@ -140,6 +141,7 @@
     }
     th { background: var(--surface2); color: var(--text-sub); font-weight: 700; font-size: 0.84rem; white-space: nowrap; }
     .scroll-hint { font-size: 0.82rem; color: var(--text-sub); margin-top: 10px; }
+    .nb { white-space: nowrap; }
     tr:last-child td { border-bottom: none; }
     td.id { font-weight: 700; color: var(--accent); white-space: nowrap; }
 
@@ -158,8 +160,8 @@
       background: var(--surface); border: 1px solid var(--border);
       border-radius: var(--radius); padding: 22px 24px;
     }
-    .file .fname { font-weight: 800; font-size: 1.02rem; margin-bottom: 10px; }
-    .file .cnt { font-size: 0.88rem; color: var(--text-sub); margin-bottom: 14px; }
+    .file .fname { font-weight: 800; font-size: 1.02rem; margin-bottom: 10px; word-break: keep-all; text-wrap: balance; }
+    .file .cnt { font-size: 0.88rem; color: var(--text-sub); margin-bottom: 14px; word-break: keep-all; text-wrap: pretty; }
     .file .dl {
       display: inline-flex; align-items: center; gap: 5px;
       background: var(--accent); color: #0d0d0d;
@@ -224,16 +226,17 @@
     <p class="section-desc">기능 명세(.md)를 넣으면 QA 양식 테스트 케이스(.xlsx)가 나옵니다.</p>
     <div class="card">
       <div class="flow">
-        <div class="step"><b>1. 입력</b>기능 명세 작성 — 입력 필드, 동작 규칙, 수치 범위, 오류 메시지, 상태 전이</div>
+        <div class="step"><b>1. 입력</b>기능 명세(.md) 작성</div>
         <span class="arr">→</span>
-        <div class="step"><b>2. 요소 추출</b>규칙·필드 단위로 분해하고 수치 범위와 상태 전이를 식별</div>
+        <div class="step"><b>2. 요소 추출</b>규칙과 수치 범위, <span class="nb">상태 전이</span> 식별</div>
         <span class="arr">→</span>
-        <div class="step"><b>3. 케이스 도출</b>규칙마다 정상·경계·예외를 각 1건 이상 생성</div>
+        <div class="step"><b>3. 케이스 도출</b><span class="nb">정상·경계·예외</span> 각 1건 이상</div>
         <span class="arr">→</span>
-        <div class="step"><b>4. 출력</b>Test Cases 시트와 Spec Issues 시트로 구성된 .xlsx</div>
+        <div class="step"><b>4. 출력</b>TC 시트와 <span class="nb">명세 이슈</span> 시트</div>
       </div>
-      <p style="margin-top:18px; color:var(--text-sub); font-size:0.95rem">
-        요소 파악부터 집계까지를 자동화하고, 커버리지와 기대 결과의 최종 검토는 사람이 맡도록 범위를 정했습니다.
+      <p style="margin-top:20px">
+        명세에서 입력 필드와 동작 규칙, 수치 범위, 오류 메시지, 상태 전이를 읽어내고 규칙마다 케이스를 만듭니다.
+        요소 파악부터 집계까지를 자동화하되, 커버리지와 기대 결과의 최종 검토는 사람이 맡도록 범위를 정했습니다.
       </p>
     </div>
   </section>
@@ -251,9 +254,9 @@
         <table>
           <thead>
             <tr>
-              <th style="width:78px">TC ID</th><th style="width:92px">대분류</th>
-              <th style="width:225px">시나리오</th><th style="width:76px">유형</th><th style="width:70px">기법</th>
-              <th style="width:195px">테스트 데이터 / 조건</th><th style="min-width:250px">기대 결과</th><th style="width:88px">우선순위</th>
+              <th style="width:70px">TC ID</th><th style="width:88px">대분류</th>
+              <th style="width:215px">시나리오</th><th style="width:72px">유형</th><th style="width:66px">기법</th>
+              <th style="width:185px">테스트 데이터 / 조건</th><th style="min-width:250px">기대 결과</th>
             </tr>
           </thead>
           <tbody>
@@ -265,7 +268,6 @@
               <td><span class="pill p-tech">EP</span></td>
               <td>전투 진입 직후</td>
               <td>적이 먼저 행동하지 않고 플레이어 턴부터 시작</td>
-              <td>Low</td>
             </tr>
             <tr>
               <td class="id">TC-04</td>
@@ -275,7 +277,6 @@
               <td><span class="pill p-tech">ST</span></td>
               <td>적 턴 중 반사 피해 등으로 마지막 적 체력 0</td>
               <td>적 턴 도중이라도 즉시 전투 승리, 남은 적 행동 취소</td>
-              <td>Medium</td>
             </tr>
             <tr>
               <td class="id">TC-09</td>
@@ -285,11 +286,13 @@
               <td><span class="pill p-tech">EP</span></td>
               <td>카드 비용 1, 보유 에너지 0</td>
               <td>플레이 무효, 에너지·손패 불변</td>
-              <td>High</td>
             </tr>
           </tbody>
         </table>
       </div>
+      <p class="scroll-hint" style="padding:0 20px 18px">
+        우선순위 열은 지면 관계로 생략했습니다. 예외는 High, 경계는 Medium, 정상은 Low로 자동 부여됩니다.
+      </p>
     </div>
     <div class="card">
       <h3>전체 13열 구성</h3>

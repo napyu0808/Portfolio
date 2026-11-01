@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>이진혁 | POP Cell 개발·QA 기록</title>
+  <meta name="description" content="세포·바이러스 테마 인크리멘탈 클리커 POP Cell. 기획·QA 담당, 밸런스 시뮬레이터와 FGT로 버그와 밸런스 결함을 찾아 수정한 기록." />
+  <style>
+    :root {
+      --accent: #978FF9;
+      --accent-dim: rgba(151, 143, 249, 0.12);
+      --accent-border: rgba(151, 143, 249, 0.28);
+      --bg: #0d0d0d;
+      --surface: #161616;
+      --surface2: #1f1f1f;
+      --border: #2a2a2a;
+      --text: #e2e2e2;
+      --text-sub: #888;
+      --ok: #51cf66;
+      --warn: #ffa94d;
+      --danger: #ff6b6b;
+      --radius: 14px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { font-size: 18px; scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Noto Sans KR', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.75;
+      word-break: keep-all;
+      overflow-wrap: break-word;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    p, li, dd, td { text-wrap: pretty; }
+    h1, h2, h3, .lead { text-wrap: balance; }
+
+    /* ── HERO ── */
+    .hero {
+      padding: 92px 24px 72px;
+      text-align: center;
+      border-bottom: 1px solid var(--border);
+      background:
+        radial-gradient(900px 340px at 50% -8%, var(--accent-dim), transparent 70%),
+        var(--bg);
+    }
+    .hero .eyebrow { font-size: 0.95rem; font-weight: 700; color: var(--text-sub); letter-spacing: 0.04em; }
+    .hero h1 {
+      font-size: clamp(1.9rem, 5.5vw, 3rem);
+      font-weight: 800; line-height: 1.25; margin: 10px 0 18px;
+    }
+    .hero h1 em { font-style: normal; color: var(--accent); }
+    .hero .lead { font-size: 1.1rem; color: var(--text-sub); max-width: 680px; margin: 0 auto; }
+    .hero .btns { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; margin-top: 28px; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      border-radius: 999px; padding: 9px 22px;
+      font-size: 0.98rem; font-weight: 800;
+    }
+    .btn.primary { background: var(--accent); color: #0d0d0d; }
+    .btn.ghost { background: var(--surface2); color: var(--text); border: 1px solid var(--border); }
+    .btn:hover { filter: brightness(1.08); }
+    .btn:focus-visible, nav a:focus-visible, td a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky; top: 0; z-index: 20;
+      background: rgba(13, 13, 13, 0.92);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+    }
+    nav .inner {
+      max-width: 1000px; margin: 0 auto; padding: 0 20px;
+      display: flex; gap: 22px; overflow-x: auto; scrollbar-width: none;
+    }
+    nav .inner::-webkit-scrollbar { display: none; }
+    nav a {
+      flex: none; padding: 15px 0;
+      font-size: 0.95rem; font-weight: 700; color: var(--text-sub);
+    }
+    nav a:hover { color: var(--accent); }
+
+    /* ── MAIN ── */
+    main {
+      max-width: 1000px; margin: 0 auto;
+      padding: 56px 20px 100px;
+      display: flex; flex-direction: column; gap: 56px;
+    }
+    section { scroll-margin-top: 70px; }
+
+    .section-title {
+      font-size: 1.8rem; font-weight: 800; color: var(--accent);
+      margin-bottom: 10px; display: flex; align-items: center; gap: 10px;
+    }
+    .section-title::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+    .section-desc { font-size: 1rem; color: var(--text-sub); margin-bottom: 24px; }
+
+    .card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 28px 32px;
+    }
+    .card + .card { margin-top: 16px; }
+    .card h3 { font-size: 1.2rem; font-weight: 800; margin-bottom: 12px; }
+    .card p + p { margin-top: 14px; }
+
+    /* ── 숫자 ── */
+    .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+    .stat {
+      background: var(--surface); border: 1px solid var(--border);
+      border-top: 3px solid var(--accent); border-radius: var(--radius);
+      padding: 22px 18px; text-align: center;
+    }
+    .stat .num { font-size: 1.9rem; font-weight: 800; color: var(--accent); line-height: 1.2; }
+    .stat .label { font-size: 0.88rem; color: var(--text-sub); margin-top: 6px; }
+
+    /* ── 개요 ── */
+    .facts { display: grid; grid-template-columns: 120px 1fr; gap: 10px 20px; font-size: 1rem; }
+    .facts dt { color: var(--text-sub); font-weight: 700; font-size: 0.92rem; padding-top: 1px; }
+    .facts dd { margin: 0; }
+
+    /* ── 흐름 ── */
+    .flow { display: flex; flex-wrap: wrap; align-items: stretch; gap: 10px; }
+    .flow .step {
+      flex: 1 1 130px; background: var(--surface2); border: 1px solid var(--border);
+      border-radius: 10px; padding: 16px 18px; font-size: 0.92rem; line-height: 1.65;
+      word-break: keep-all; text-wrap: balance;
+    }
+    .flow .step b { display: block; font-size: 0.82rem; color: var(--accent); margin-bottom: 4px; }
+    .flow .arr { align-self: center; color: var(--text-sub); }
+
+    /* ── 스크린샷 ── */
+    .shots { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .shot { margin: 0; }
+    .shot img {
+      display: block; width: 100%; height: auto; aspect-ratio: 960 / 546;
+      border-radius: 10px; border: 1px solid var(--border); background: var(--surface2);
+    }
+    .shot figcaption { font-size: 0.88rem; color: var(--text-sub); margin-top: 8px; }
+    .shot.wide { grid-column: 1 / -1; }
+    .note { font-size: 0.85rem; color: var(--text-sub); margin-top: 16px; }
+
+    /* ── 목록 ── */
+    ul.plain { padding-left: 20px; font-size: 1rem; }
+    ul.plain li + li { margin-top: 10px; }
+    ul.plain b { color: var(--accent); }
+
+    /* ── 표 ── */
+    .tbl-wrap {
+      overflow-x: auto; border: 1px solid var(--border); border-radius: 10px;
+      -webkit-overflow-scrolling: touch;
+    }
+    table {
+      width: 100%; min-width: 900px;
+      border-collapse: collapse; font-size: 0.9rem;
+    }
+    table.narrow { min-width: 720px; }
+    th, td {
+      text-align: left; padding: 13px 15px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+      word-break: keep-all; text-wrap: pretty; line-height: 1.65;
+    }
+    th { background: var(--surface2); color: var(--text-sub); font-weight: 700; font-size: 0.84rem; white-space: nowrap; }
+    tr:last-child td { border-bottom: none; }
+    td.id { font-weight: 700; color: var(--accent); white-space: nowrap; }
+    td a.hash { font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 0.82rem; color: var(--accent); border-bottom: 1px dotted var(--accent-border); }
+    .scroll-hint { font-size: 0.82rem; color: var(--text-sub); margin-top: 10px; }
+
+    .pill {
+      display: inline-block; font-size: 0.78rem; font-weight: 700;
+      padding: 2px 10px; border-radius: 999px; white-space: nowrap;
+    }
+    .p-ok   { background: rgba(81,207,102,.14); color: var(--ok); }
+    .p-warn { background: rgba(255,169,77,.14); color: var(--warn); }
+    .p-sub  { background: var(--surface2); color: var(--text-sub); border: 1px solid var(--border); }
+
+    .story { border-left: 3px solid var(--accent); padding-left: 18px; }
+    .story p + p { margin-top: 10px; }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 28px 20px 48px; text-align: center;
+      font-size: 0.9rem; color: var(--text-sub);
+    }
+    footer a { color: var(--accent); font-weight: 700; }
+
+    @media (max-width: 860px) {
+      html { font-size: 16px; }
+      .hero { padding: 64px 20px 52px; }
+      .stats { grid-template-columns: repeat(2, 1fr); }
+      .shots { grid-template-columns: 1fr; }
+      .facts { grid-template-columns: 1fr; gap: 2px 0; }
+      .facts dd { margin-bottom: 10px; }
+      .flow .arr { display: none; }
+      .card { padding: 24px 20px; }
+      main { padding: 40px 16px 72px; gap: 44px; }
+      nav .inner { padding: 0 16px; gap: 18px; }
+    }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  </style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="eyebrow">이진혁 · QA 포트폴리오</div>
+  <h1><em>POP Cell</em> 개발·QA 기록</h1>
+  <p class="lead">감염된 세포와 바이러스를 커서로 터뜨려 8개 지역의 보스를 차례로 처치하는 인크리멘탈 클리커입니다. 기획과 QA를 맡았고, 밸런스 시뮬레이터와 테스터 7명의 FGT로 버그와 진행 불가 구간을 찾아 고쳤습니다.</p>
+  <div class="btns">
+    <a class="btn primary" href="https://napyu0808.github.io/pop-cell/" target="_blank" rel="noopener">▶ 웹에서 플레이</a>
+    <a class="btn ghost" href="https://github.com/napyu0808/pop-cell" target="_blank" rel="noopener">GitHub 저장소</a>
+  </div>
+</header>
+
+<nav>
+  <div class="inner">
+    <a href="#summary">요약</a>
+    <a href="#game">게임 소개</a>
+    <a href="#shots">스크린샷</a>
+    <a href="#test">테스트 방법</a>
+    <a href="#bugs">버그 사례</a>
+    <a href="#balance">밸런스 결함</a>
+    <a href="#next">남은 작업</a>
+  </div>
+</nav>
+
+<main>
+
+  <!-- 요약 -->
+  <section id="summary">
+    <div class="section-title">요약</div>
+    <div class="stats">
+      <div class="stat"><div class="num">13건</div><div class="label">대표 버그 사례 수정</div></div>
+      <div class="stat"><div class="num">6건</div><div class="label">밸런스 결함 분석</div></div>
+      <div class="stat"><div class="num">7명</div><div class="label">FGT 테스터</div></div>
+      <div class="stat"><div class="num">78개</div><div class="label">커밋 (2026.09~11)</div></div>
+    </div>
+    <div class="card" style="margin-top:16px">
+      <dl class="facts">
+        <dt>기간</dt><dd>2026.08 ~ 진행 중 (스토브인디 출시 목표)</dd>
+        <dt>형태</dt><dd>개인 개발</dd>
+        <dt>역할</dt><dd>기획, QA (구현은 Claude Code 활용)</dd>
+        <dt>사용 기술</dt><dd>Unity 6 (URP 2D, WebGL), C#, Python (밸런스 시뮬레이터), Claude Code, GitHub Pages</dd>
+        <dt>규모</dt><dd>지역 8개, 업그레이드 노드 280개, 타워 공격 패턴 5종, 한국어·일본어 지원</dd>
+      </dl>
+    </div>
+  </section>
+
+  <!-- 게임 소개 -->
+  <section id="game">
+    <div class="section-title">게임 소개</div>
+    <p class="section-desc">현미경 시점에서 세포와 바이러스를 다루는 인크리멘탈 클리커입니다. 한 판의 흐름은 다음과 같습니다.</p>
+    <div class="card">
+      <div class="flow">
+        <div class="step"><b>1. 공격</b>커서를 적에게 가져가면 범위 안의 적을 공격</div>
+        <span class="arr">→</span>
+        <div class="step"><b>2. 웨이브</b>처치로 골드를 얻고, 처치 수를 채우면 다음 웨이브</div>
+        <span class="arr">→</span>
+        <div class="step"><b>3. 보스</b>마지막 웨이브의 보스를 잡으면 다음 지역 개방</div>
+        <span class="arr">→</span>
+        <div class="step"><b>4. 성장</b>시간이 끝나면 골드로 업그레이드 트리를 사고 재도전</div>
+        <span class="arr">→</span>
+        <div class="step"><b>5. 변이</b>8지역 클리어 후 더 높은 난이도로 처음부터</div>
+      </div>
+      <p style="margin-top:20px">
+        자동 공격 위주의 플레이에 좌클릭 스킬 '백신 투하'를 더해 조작 요소를 넣었습니다.
+        판당 사용 횟수가 정해져 있어 쓸 타이밍을 골라야 합니다.
+      </p>
+    </div>
+  </section>
+
+  <!-- 스크린샷 -->
+  <section id="shots">
+    <div class="section-title">스크린샷</div>
+    <div class="shots">
+      <figure class="shot wide"><img src="images/popcell/04_battle_variants.webp" alt="전투 화면. 세포 적들 사이에 변이 적과 황금 적이 섞여 있다" loading="lazy" width="960" height="546" /><figcaption>전투 화면 — 변이 적(빨강·파랑)과 황금 적</figcaption></figure>
+      <figure class="shot"><img src="images/popcell/01_title.webp" alt="타이틀 화면" loading="lazy" width="960" height="546" /><figcaption>타이틀 화면</figcaption></figure>
+      <figure class="shot"><img src="images/popcell/02_map.webp" alt="8개 지역 선택 화면" loading="lazy" width="960" height="546" /><figcaption>지역 선택</figcaption></figure>
+      <figure class="shot"><img src="images/popcell/03_upgrade_tree.webp" alt="업그레이드 트리와 현재 능력치 패널" loading="lazy" width="960" height="546" /><figcaption>업그레이드 트리 (280노드)</figcaption></figure>
+      <figure class="shot"><img src="images/popcell/09_skill.webp" alt="백신 투하 스킬 사용 장면" loading="lazy" width="960" height="546" /><figcaption>수동 스킬 '백신 투하'</figcaption></figure>
+      <figure class="shot"><img src="images/popcell/10_tower_attacks.webp" alt="화염, 레이저, 저격 타워 공격" loading="lazy" width="960" height="546" /><figcaption>타워 공격 (화염·레이저·저격)</figcaption></figure>
+      <figure class="shot"><img src="images/popcell/07_culture.webp" alt="배양 연구소 화면" loading="lazy" width="960" height="546" /><figcaption>배양 연구소 (방치 수입)</figcaption></figure>
+      <figure class="shot wide"><img src="images/popcell/11_boss.webp" alt="보스전 화면" loading="lazy" width="960" height="546" /><figcaption>보스전</figcaption></figure>
+    </div>
+    <p class="note">촬영을 위해 중반 진행 상태(4지역 클리어)를 구성해 찍었고, 전투 화면은 적 수를, 타워 화면은 공격 효과가 보이는 시간을 평소보다 늘렸습니다.</p>
+  </section>
+
+  <!-- 테스트 방법 -->
+  <section id="test">
+    <div class="section-title">테스트 방법</div>
+    <p class="section-desc">감으로 조정하지 않고, 재현하고 원인을 찾고 수치로 확인하는 순서로 진행했습니다.</p>
+    <div class="card" style="padding:0; overflow:hidden">
+      <div class="tbl-wrap" style="border:none">
+        <table class="narrow">
+          <thead><tr><th style="width:170px">방법</th><th>내용</th></tr></thead>
+          <tbody>
+            <tr><td class="id">FGT</td><td>테스터 7명에게 웹 빌드를 공개하고, 받은 피드백을 반영해 수정과 재배포를 반복</td></tr>
+            <tr><td class="id">밸런스 시뮬레이션</td><td>게임 루프를 Python으로 복제해 프레임 단위로 실행하고, 여러 시드로 돌려 진행 불가 구간을 탐지</td></tr>
+            <tr><td class="id">데이터 일치 검증</td><td>시뮬레이터 수치가 C# 수치와 같은지 노드 수와 총비용으로 먼저 확인하고, 어긋나면 결과를 쓰지 않음</td></tr>
+            <tr><td class="id">시뮬레이터 정확도</td><td>초기 시뮬레이터를 실제 플레이 기록과 대조해 골드 오차 0.6%, 0.01% 확인</td></tr>
+            <tr><td class="id">회귀 기준</td><td>새 지역 수입은 이전 지역 이상, 강화 비용 1,000만 미만, 테스터 세이브 유지</td></tr>
+            <tr><td class="id">빌드 확인</td><td>에디터 플레이 모드와 로컬 서버의 WebGL 빌드에서 각각 실행 확인</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- 버그 사례 -->
+  <section id="bugs">
+    <div class="section-title">대표 버그 사례</div>
+    <p class="section-desc">별도 이슈 트래커 없이 진행해, 커밋과 작업 기록에서 다시 모은 대표 사례 13건입니다. 커밋 번호를 누르면 실제 수정 내용을 볼 수 있습니다.</p>
+    <div class="card" style="padding:0; overflow:hidden">
+      <div class="tbl-wrap" style="border:none">
+        <table>
+          <thead>
+            <tr><th style="width:44px">#</th><th style="width:230px">현상</th><th style="width:250px">원인</th><th style="width:230px">조치</th><th style="width:92px">발견</th><th style="width:84px">커밋</th></tr>
+          </thead>
+          <tbody>
+            <tr><td class="id">1</td><td>웹에서 약 90% 로드 후 크래시</td><td>같은 파일명으로 배포해 브라우저에 캐시된 이전 wasm과 새 빌드가 충돌</td><td>빌드 파일명에 콘텐츠 해시 적용, 데이터 캐시 끔</td><td><span class="pill p-sub">기록 없음</span></td><td><a class="hash" href="https://github.com/napyu0808/pop-cell/commit/c9e1a0e" target="_blank" rel="noopener">c9e1a0e</a></td></tr>
+            <tr><td class="id">2</td><td>글자가 공백에서 잘림 ("새로 시작"이 "새로"로 표시)</td><td>폰트 서브셋 필터가 공백 글리프를 제외</td><td>필터 조건 수정, 폰트 재생성</td><td><span class="pill p-sub">기록 없음</span></td><td><a class="hash" href="https://github.com/napyu0808/pop-cell/commit/40574d0" target="_blank" rel="noopener">40574d0</a></td></tr>
+            <tr><td class="id">3</td><td>탭 이름이 "타 강화"로 표시</td><td>폰트를 다시 만들지 않아 "워" 글자 누락</td><td>폰트 서브셋 재생성</td><td><span class="pill p-sub">기록 없음</span></td><td><a class="hash" href="https://github.com/napyu0808/pop-cell/commit/171417a" target="_blank" rel="noopener">171417a</a></td></tr>
+            <tr><td class="id">4</td><td>화살표 한 번에 지역이 두 칸 이동</td><td>화살표 클릭이 아래 카드에도 전달</td><td>입력 처리 분리, 드래그 스냅 추가</td><td><span class="pill p-sub">기록 없음</span></td><td><a class="hash" href="https://github.com/napyu0808/pop-cell/commit/171417a" target="_blank" rel="noopener">171417a</a></td></tr>
+            <tr><td class="id">5</td><td>보스가 범위 안에 있어도 맞지 않음</td><td>처치가 나올 때마다 공격 처리가 끊겨 보스까지 도달하지 못함</td><td>실제로 웨이브가 넘어갈 때만 처리 중단</td><td><span class="pill p-sub">기록 없음</span></td><td><a class="hash" href="https://github.com/napyu0808/pop-cell/commit/1f434da" target="_blank" rel="noopener">1f434da</a></td></tr>
+            <tr><td class="id">6</td><td>노드에 마우스를 올리면 수치 글자가 겹치고 잘림</td><td>미리보기 문자열이 패널 폭을 넘음</td><td>폭이 모자라면 표시 축약, 글자 크기 연동</td><td><span class="pill p-sub">기록 없음</span></td><td><a class="hash" href="https://github.com/napyu0808/pop-cell/commit/8aae02a" target="_blank" rel="noopener">8aae02a</a></td></tr>
+            <tr><td class="id">7</td><td>연구원 없이 산출·속도를 사면 골드만 사라짐</td><td>0에 곱하는 강화가 구매 가능했음</td><td>연구원이 생길 때까지 비활성화하고 이유 표시</td><td><span class="pill p-sub">기록 없음</span></td><td><a class="hash" href="https://github.com/napyu0808/pop-cell/commit/57bb16c" target="_blank" rel="noopener">57bb16c</a></td></tr>
+            <tr><td class="id">8</td><td>구버전 세이브를 불러오면 트리를 전부 살 수 있고 노드가 사라짐</td><td>경제 규모와 노드 구조 변경</td><td>세이브에 밸런스 세대를 두고, 구세대는 환생과 같은 범위로 초기화</td><td><span class="pill p-sub">기록 없음</span></td><td><a class="hash" href="https://github.com/napyu0808/pop-cell/commit/98d72bf" target="_blank" rel="noopener">98d72bf</a></td></tr>
+            <tr><td class="id">9</td><td>8지역 클리어 후 전장에 적이 남음</td><td>리스트 순회 중 정리를 호출했고, 이름으로 대상을 찾아 엘리트·황금 적·백신이 빠짐</td><td>정리를 다음 프레임으로 지연, 대상 이름 추가</td><td><span class="pill p-ok">FGT</span></td><td><a class="hash" href="https://github.com/napyu0808/pop-cell/commit/a4434a0" target="_blank" rel="noopener">a4434a0</a></td></tr>
+            <tr><td class="id">10</td><td>변이 시작 시 배양·정수가 초기화되지 않음</td><td>초기화 범위 누락</td><td>초기화 범위 확장</td><td><span class="pill p-ok">FGT</span></td><td><a class="hash" href="https://github.com/napyu0808/pop-cell/commit/a4434a0" target="_blank" rel="noopener">a4434a0</a></td></tr>
+            <tr><td class="id">11</td><td>커서를 가만히 둬도 이전 지역 보스가 잡힘</td><td>보스가 항상 화면 중앙에서 등장</td><td>커서에서 떨어진 임의 위치에 등장</td><td><span class="pill p-ok">플레이 테스트</span></td><td><a class="hash" href="https://github.com/napyu0808/pop-cell/commit/d983411" target="_blank" rel="noopener">d983411</a></td></tr>
+            <tr><td class="id">12</td><td>1회만 사면 되는 메타 노드가 레벨 3까지 오름</td><td>변이 단계 보너스가 모든 노드에 적용</td><td>1회성 노드 제외, 기존 구매분 샤드 환불</td><td><span class="pill p-ok">플레이 테스트</span></td><td><a class="hash" href="https://github.com/napyu0808/pop-cell/commit/3d01581" target="_blank" rel="noopener">3d01581</a></td></tr>
+            <tr><td class="id">13</td><td>새로고침하면 8지역 클리어 소요 시간이 초기화됨</td><td>값이 메모리에만 있었음</td><td>세이브에 저장, 기존 세이브와 호환 유지</td><td><span class="pill p-ok">플레이 테스트</span></td><td><a class="hash" href="https://github.com/napyu0808/pop-cell/commit/e03edb7" target="_blank" rel="noopener">e03edb7</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <p class="scroll-hint">표가 화면보다 넓으면 좌우로 밀어서 볼 수 있습니다.</p>
+
+    <div class="card" style="margin-top:20px">
+      <h3>9번 버그: 원인이 두 개였던 경우</h3>
+      <div class="story">
+        <p>처음 보인 현상은 "8지역을 클리어해도 적이 정리되지 않는다"는 것뿐이었습니다.</p>
+        <p>확인해 보니 원인이 둘이었습니다. 적 리스트를 도는 도중에 정리가 호출되었고, 정리 대상을 오브젝트 이름으로 찾다 보니 나중에 추가된 엘리트·황금 적·백신이 빠져 있었습니다.</p>
+        <p>새 적을 추가할 때 다른 시스템이 함께 깨질 수 있다는 것을 보여 준 회귀 사례입니다.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 밸런스 결함 -->
+  <section id="balance">
+    <div class="section-title">밸런스 결함</div>
+    <p class="section-desc">시뮬레이터와 FGT 피드백으로 찾은 밸런스 문제를 원인 수치와 함께 정리했습니다.</p>
+    <div class="card" style="padding:0; overflow:hidden">
+      <div class="tbl-wrap" style="border:none">
+        <table>
+          <thead><tr><th style="width:210px">문제</th><th style="width:340px">분석</th><th style="width:260px">조치</th><th style="width:84px">상태</th></tr></thead>
+          <tbody>
+            <tr><td>1지역 클리어 불가</td><td>한 판 수입 31골드, 첫 노드 60골드. 30판 시뮬레이션에서도 클리어 실패</td><td>비용, 체력, 수입 재조정 (<a class="hash" href="https://github.com/napyu0808/pop-cell/commit/c79dc50" target="_blank" rel="noopener">c79dc50</a>)</td><td><span class="pill p-ok">해결</span></td></tr>
+            <tr><td>7지역 진행 불가</td><td>400판을 돌려도 클리어 실패. 적 체력은 33배 뛰는데 화력은 3.4배만 상승</td><td>지역 체력을 플레이어 화력 곡선에 맞춰 재설계 (<a class="hash" href="https://github.com/napyu0808/pop-cell/commit/a2f8ecd" target="_blank" rel="noopener">a2f8ecd</a>)</td><td><span class="pill p-ok">해결</span></td></tr>
+            <tr><td>1~6지역이 지나치게 쉬움 (FGT 제보)</td><td>3~6지역 수입의 79~98%가 배양에서 나옴</td><td>배양 수입 배율 1.55 → 1.22, 처치 할당량 조정 (<a class="hash" href="https://github.com/napyu0808/pop-cell/commit/a4434a0" target="_blank" rel="noopener">a4434a0</a>)</td><td><span class="pill p-ok">해결</span></td></tr>
+            <tr><td>업그레이드 창을 열어도 살 것이 없음 (FGT 피드백)</td><td>가격이 단계 사이에서 크게 뜀</td><td>하나의 가격 곡선으로 통일, 가지 길이 2배 (<a class="hash" href="https://github.com/napyu0808/pop-cell/commit/d983411" target="_blank" rel="noopener">d983411</a>)</td><td><span class="pill p-ok">해결</span></td></tr>
+            <tr><td>저격 타워가 메인 공격이 됨 (플레이 피드백)</td><td>고정 공격력까지 8배가 되어, 계산상 보스 DPS 약 81만으로 커서의 약 16배</td><td>플레이어 공격력의 2배로 변경, 계산상 약 6.7만 (<a class="hash" href="https://github.com/napyu0808/pop-cell/commit/6781652" target="_blank" rel="noopener">6781652</a>)</td><td><span class="pill p-ok">해결</span></td></tr>
+            <tr><td>8지역 클리어 시간이 약 2분 또는 약 55분으로 갈림</td><td>백신 피해가 보스 최대 체력의 %라서, 체력을 올려도 중간값이 생기지 않음</td><td>수입과 보스 체력을 함께 조정 (<a class="hash" href="https://github.com/napyu0808/pop-cell/commit/82812ee" target="_blank" rel="noopener">82812ee</a>). 저격 하향 후 시뮬레이션에서 다시 갈려 추가 조정 필요</td><td><span class="pill p-warn">진행 중</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <p class="note">플레이 시간 수치는 시뮬레이터 추정치이며, 실제 플레이로는 아직 다시 측정하지 않았습니다.</p>
+  </section>
+
+  <!-- 남은 작업 -->
+  <section id="next">
+    <div class="section-title">남은 작업</div>
+    <div class="card">
+      <ul class="plain">
+        <li><b>밸런스</b> — 8지역 클리어 시간 편차 조정, 실제 플레이 시간 측정</li>
+        <li><b>확인</b> — 환생·변이 초기화 후 스킬 상태, 스킬 쿨다운과 보스 피해 실측</li>
+        <li><b>콘텐츠</b> — 수동 스킬 추가 기획 (트리의 왼쪽 아래, 오른쪽 아래 자리)</li>
+        <li><b>출시 준비</b> — 설정의 해상도 항목 정리, BGM 라이선스 확인, 플레이 영상 제작</li>
+      </ul>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <a href="./">← 포트폴리오로 돌아가기</a>
+  <div style="margin-top:8px">© 2026 이진혁</div>
+</footer>
+
+</body>
+</html>

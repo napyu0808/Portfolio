@@ -209,7 +209,7 @@
 <header class="hero">
   <div class="eyebrow">이진혁 · QA 포트폴리오</div>
   <h1><em>POP Cell</em> 개발·QA 기록</h1>
-  <p class="lead">감염된 세포와 바이러스를 커서로 터뜨려 8개 지역의 보스를 차례로 처치하는 인크리멘탈 클리커입니다. 기획과 QA를 맡았고, 밸런스 시뮬레이터와 테스터 7명의 FGT로 버그와 진행 불가 구간을 찾아 고쳤습니다.</p>
+  <p class="lead">감염된 세포와 바이러스를 커서로 터뜨려 8개 지역의 보스를 차례로 처치하는 인크리멘탈 클리커. 기획과 QA 담당, 밸런스 시뮬레이터와 테스터 7명의 FGT로 버그와 진행 불가 구간 발견 및 수정</p>
   <div class="btns">
     <a class="btn primary" href="https://napyu0808.github.io/pop-cell/" target="_blank" rel="noopener">▶ 웹에서 플레이</a>
     <a class="btn ghost" href="https://github.com/napyu0808/pop-cell" target="_blank" rel="noopener">GitHub 저장소</a>
@@ -253,7 +253,7 @@
   <!-- 게임 소개 -->
   <section id="game">
     <div class="section-title">게임 소개</div>
-    <p class="section-desc">현미경 시점에서 세포와 바이러스를 다루는 인크리멘탈 클리커입니다. 한 판의 흐름은 다음과 같습니다.</p>
+    <p class="section-desc">현미경 시점에서 세포와 바이러스를 다루는 인크리멘탈 클리커의 한 판 흐름</p>
     <div class="card">
       <div class="flow">
         <div class="step"><b>1. 공격</b>커서를 적에게 가져가면 범위 안의 적을 공격</div>
@@ -267,8 +267,8 @@
         <div class="step"><b>5. 변이</b>8지역 클리어 후 더 높은 난이도로 처음부터</div>
       </div>
       <p style="margin-top:20px">
-        자동 공격 위주의 플레이에 좌클릭 스킬 '백신 투하'를 더해 조작 요소를 넣었습니다.
-        판당 사용 횟수가 정해져 있어 쓸 타이밍을 골라야 합니다.
+        자동 공격 위주의 플레이에 좌클릭 스킬 '백신 투하'를 더해 조작 요소 추가.
+        판당 사용 횟수 제한으로 사용 타이밍 선택 요소 부여
       </p>
     </div>
   </section>
@@ -286,13 +286,13 @@
       <figure class="shot"><img src="images/popcell/07_culture.webp" alt="배양 연구소 화면" loading="lazy" width="960" height="546" /><figcaption>배양 연구소 (방치 수입)</figcaption></figure>
       <figure class="shot wide"><img src="images/popcell/11_boss.webp" alt="보스전 화면" loading="lazy" width="960" height="546" /><figcaption>보스전</figcaption></figure>
     </div>
-    <p class="note">촬영을 위해 중반 진행 상태(4지역 클리어)를 구성해 찍었고, 전투 화면은 적 수를, 타워 화면은 공격 효과가 보이는 시간을 평소보다 늘렸습니다.</p>
+    <p class="note">촬영용으로 중반 진행 상태(4지역 클리어)를 구성해 촬영. 전투 화면은 적 수, 타워 화면은 공격 효과 표시 시간을 평소보다 늘린 상태</p>
   </section>
 
   <!-- 테스트 방법 -->
   <section id="test">
     <div class="section-title">테스트 방법</div>
-    <p class="section-desc">감으로 조정하지 않고, 재현하고 원인을 찾고 수치로 확인하는 순서로 진행했습니다.</p>
+    <p class="section-desc">감으로 조정하지 않고 재현 → 원인 분석 → 수치 검증 순서로 진행</p>
     <div class="card" style="padding:0; overflow:hidden">
       <div class="tbl-wrap" style="border:none">
         <table class="narrow">
@@ -313,7 +313,7 @@
   <!-- 버그 사례 -->
   <section id="bugs">
     <div class="section-title">대표 버그 사례</div>
-    <p class="section-desc">별도 이슈 트래커 없이 진행해, 커밋과 작업 기록에서 다시 모은 대표 사례 13건입니다. 커밋 번호를 누르면 실제 수정 내용을 볼 수 있습니다.</p>
+    <p class="section-desc">별도 이슈 트래커 없이 진행해, 커밋과 작업 기록에서 다시 모은 대표 사례 13건. 커밋 번호를 누르면 실제 수정 내용 확인 가능</p>
     <div class="card" style="padding:0; overflow:hidden">
       <div class="tbl-wrap" style="border:none">
         <table>
@@ -338,14 +338,14 @@
         </table>
       </div>
     </div>
-    <p class="scroll-hint">표가 화면보다 넓으면 좌우로 밀어서 볼 수 있습니다.</p>
+    <p class="scroll-hint">표가 화면보다 넓으면 좌우로 밀어서 확인</p>
 
     <div class="card" style="margin-top:20px">
       <h3>9번 버그: 원인이 두 개였던 경우</h3>
       <div class="story">
-        <p>처음 보인 현상은 "8지역을 클리어해도 적이 정리되지 않는다"는 것뿐이었습니다.</p>
-        <p>확인해 보니 원인이 둘이었습니다. 적 리스트를 도는 도중에 정리가 호출되었고, 정리 대상을 오브젝트 이름으로 찾다 보니 나중에 추가된 엘리트·황금 적·백신이 빠져 있었습니다.</p>
-        <p>새 적을 추가할 때 다른 시스템이 함께 깨질 수 있다는 것을 보여 준 회귀 사례입니다.</p>
+        <p>처음 보인 현상: "8지역을 클리어해도 적이 정리되지 않음"</p>
+        <p>확인 결과 원인은 두 가지. 적 리스트를 도는 도중 정리 호출, 그리고 정리 대상을 오브젝트 이름으로 찾아 나중에 추가된 엘리트·황금 적·백신이 누락</p>
+        <p>새 적을 추가할 때 다른 시스템이 함께 깨질 수 있음을 보여 준 회귀 사례</p>
       </div>
     </div>
   </section>
@@ -353,7 +353,7 @@
   <!-- 밸런스 결함 -->
   <section id="balance">
     <div class="section-title">밸런스 결함</div>
-    <p class="section-desc">시뮬레이터와 FGT 피드백으로 찾은 밸런스 문제를 원인 수치와 함께 정리했습니다.</p>
+    <p class="section-desc">시뮬레이터와 FGT 피드백으로 찾은 밸런스 문제를 원인 수치와 함께 정리</p>
     <div class="card" style="padding:0; overflow:hidden">
       <div class="tbl-wrap" style="border:none">
         <table>
@@ -369,7 +369,7 @@
         </table>
       </div>
     </div>
-    <p class="note">플레이 시간 수치는 시뮬레이터 추정치이며, 실제 플레이로는 아직 다시 측정하지 않았습니다.</p>
+    <p class="note">플레이 시간 수치는 시뮬레이터 추정치이며, 실제 플레이 측정은 진행 예정</p>
   </section>
 
   <!-- 남은 작업 -->
